@@ -164,7 +164,8 @@ VALUE(5, 'Widget', 5, 8.99, 'Amazon');
 VALUE(3, 'Pencil', 100, 0.59, 'ACME');
 
 DELETE FROM Orders
-WHERE business_name = 'Amazon';   //by doing it, we have no more data related for amazon, better to have different tables like product table, business table, etc
+WHERE business_name = 'Amazon';   //by doing it, we have no more data related for amazon,  no longer exist in our database
+                                  //better to have different tables like product table, business table, price etc
 
 
 Step 16 – File and Database Table Comparison
