@@ -1,0 +1,139 @@
+An instance is a collection of SQL Server databases run by a single SQL Server service
+
+MSSQL - sqlcmd for command-line window
+execute - press F5 or select lines of code to be executed then press F5. 
+
+
+Step 1: Creating a Table
+
+CREATE TABLE Person( 
+person_id DECIMAL(12), 
+first_name VARCHAR(256), 
+last_name VARCHAR(256) 
+);
+
+
+
+Step2: Inserting a Row
+
+INSERT INTO Person (person_id, first_name, last_name)
+VALUES(1, 'John', 'Smith');
+
+
+
+Step 3: Selecting All Rows
+SELECT *      (* means all)
+FROM TableName
+
+SELECT *
+FROM Person;
+
+
+
+Step 4: Updating All Rows
+UPDATE TableName
+SET columnX = Value;
+
+UPDATE Person
+Set last_name = 'Glass';
+
+
+
+Step 5: delete -  Deleting All Rows
+DELETE FROM TableName
+
+DELETE FROM Person;
+
+
+
+Step 6: Dropping a Table - getting rid of whole table - dangerous
+DROP TABLE TableName;
+
+DROP TABLE Person;
+
+
+Step 7: Table Setup
+creating a table with constraints
+CREATE TABLE TableName(
+Column1 Datatype 2 NOT NULL PRIMARY KEY, // set it as a primary key, must be unique
+Column1 Datatype 2 NOT NULL...);      // all row must have a value, can not be null
+
+example:
+CREATE TABLE Person( 
+person_id DECIMAL(12),  NOT NULL PRIMARY KEY,
+first_name VARCHAR(256), NOT NULL
+last_name VARCHAR(256) NOT NULL
+);
+
+INSERT INTO Person (person_id, first_name, last_name)
+VALUES(1, 'John', 'Smith');   // we can only have one '1', and all data must have a value
+
+
+step 8-9: 
+
+
+step 11: filtered results
+SELECT column X, column Y
+FROM TableName
+WHERE columnZ = Value;
+
+example:
+SELECT first_name, last_name
+FROM Person
+WHERE person_id = 3 AND last_name = 'Smith';
+
+
+
+steps 12-13: targeted update
+UPDATE TableName 
+Set column X = Value
+WHERE ;
+
+example:
+UPDATE Person 
+Set last_name = 'Yu'
+WHERE person_id = 1;
+
+
+step 14: targeted data removal
+
+DELECT FROM Person 
+Where person_id = 2;
+
+
+
+
+session3
+
+step 15: data anomalies
+multiple insertions of the same data
+when you have multiple rows you end up deleting the data you are not supposed to delete.
+
+example:
+CREATE TABLE Restaurant (
+restaurant_id DECIMAL(12) NOT NULL PRIMARY KEY,
+restaurant_name VARCHAR(32) NOT NULL,
+open_since DATE NOT NULL);
+
+INSERT INTO Restaurant (restaurant_id, restaurant_name, open_since)
+VALUES (101, 'Happy Town', CAST('23-APR-2021' AS DATE));      //CAST it as a date with a specific format 23-APR-2021 for SQL
+INSERT INTO Restaurant (restaurant_id, restaurant_name, open_since)
+VALUES (102, 'Fun Town', '13-MAY-2021');    //converted
+
+
+
+CREATE TABLE Orders(
+order_id DECIMAL(12) NOT NULL PRIMARY KEY,
+product_name VARCHAR(32) NOT NULL,
+quantity DECIMAL(12) NOT NULL),
+price DECIMAL(12) NOT NULL),
+business_name VARCHAR(64) NOT NULL);
+
+INSERT INTO Orders(order_id, product_name, quantity, price, business_name)
+VALUE
+
+
+
+Step 16 – File and Database Table Comparison
+
+
