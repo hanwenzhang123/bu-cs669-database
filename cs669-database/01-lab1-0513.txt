@@ -100,7 +100,7 @@ step 8-9: Table Population
 step 11: Filtered Results
 SELECT column X, column Y
 FROM TableName
-WHERE columnZ = Value;
+WHERE columnZ = Value;  // a precise location, targeted result
 
 example:
 SELECT first_name, last_name
