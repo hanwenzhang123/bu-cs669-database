@@ -2,10 +2,27 @@ An instance is a collection of SQL Server databases run by a single SQL Server s
 
 MSSQL - sqlcmd for command-line window
 execute - press F5 or select lines of code to be executed then press F5. 
+column - control + space - show existing column
+
+datatype:
+decimal - number
+DECIMAL(12) - number - up to 12 digits
+varchar - string
+VARCHAR(256) - limit of the characters, here is 256 characters
+date - date
 
 
 Step 1: Creating a Table
+tables are data containers
+tables enforces a structure
+tables have columns
 
+CREATE TABLE TableNmae(   //TableName is an identifier
+Column1 Datatype1,
+Column2 Datatype2,...
+);    //(; - SQL command)
+
+example:
 CREATE TABLE Person( 
 person_id DECIMAL(12), 
 first_name VARCHAR(256), 
@@ -13,54 +30,62 @@ last_name VARCHAR(256)
 );
 
 
-
 Step2: Inserting a Row
+INSERT INTO TableName (column1, column2...)
+VALUES(value1, value2, ...);
 
+example:
 INSERT INTO Person (person_id, first_name, last_name)
 VALUES(1, 'John', 'Smith');
-
+//the order of the value is corresponding to the column
+//' 'is a string literal, means for data
 
 
 Step 3: Selecting All Rows
-SELECT *      (* means all)
+SELECT *      //(* means all)
 FROM TableName
 
+example:
 SELECT *
 FROM Person;
-
 
 
 Step 4: Updating All Rows
 UPDATE TableName
 SET columnX = Value;
 
+example:
 UPDATE Person
 Set last_name = 'Glass';
 
 
-
-Step 5: delete -  Deleting All Rows
+Step 5: Deleting All Rows
 DELETE FROM TableName
 
+example:
 DELETE FROM Person;
+// all the rows are gone, but the table (person_id, first_name, last_name) still exists
 
 
-
-Step 6: Dropping a Table - getting rid of whole table - dangerous
+Step 6: Dropping a Table 
 DROP TABLE TableName;
 
+example:
 DROP TABLE Person;
+
+//getting rid of whole table - dangerous
+//person no longer exist
 
 
 Step 7: Table Setup
-creating a table with constraints
+creating a table with constraints, must be true all the time
 CREATE TABLE TableName(
 Column1 Datatype 2 NOT NULL PRIMARY KEY, // set it as a primary key, must be unique
 Column1 Datatype 2 NOT NULL...);      // all row must have a value, can not be null
 
 example:
 CREATE TABLE Person( 
-person_id DECIMAL(12),  NOT NULL PRIMARY KEY,
+person_id DECIMAL(12),  NOT NULL PRIMARY KEY,   //unique identifier
 first_name VARCHAR(256), NOT NULL
 last_name VARCHAR(256) NOT NULL
 );
@@ -69,10 +94,10 @@ INSERT INTO Person (person_id, first_name, last_name)
 VALUES(1, 'John', 'Smith');   // we can only have one '1', and all data must have a value
 
 
-step 8-9: 
+step 8-9: Table Population
 
 
-step 11: filtered results
+step 11: Filtered Results
 SELECT column X, column Y
 FROM TableName
 WHERE columnZ = Value;
@@ -103,7 +128,6 @@ Where person_id = 2;
 
 
 
-session3
 
 step 15: data anomalies
 multiple insertions of the same data
