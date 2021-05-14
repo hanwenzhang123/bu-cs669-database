@@ -94,7 +94,7 @@ INSERT INTO Person (person_id, first_name, last_name)
 VALUES(1, 'John', 'Smith');   // we can only have one '1', and all data must have a value
 
 
-step 8-9: Table Population
+step 8-10: Table Population
 
 
 step 11: Filtered Results
@@ -105,33 +105,39 @@ WHERE columnZ = Value;  // a precise location, targeted result
 example:
 SELECT first_name, last_name
 FROM Person
-WHERE person_id = 3 AND last_name = 'Smith';
+WHERE person_id = 1 AND last_name = 'Smith';
 
 
 
-steps 12-13: targeted update
+steps 12-13: Targeted Update
 UPDATE TableName 
-Set column X = Value
-WHERE ;
+SET columnX = Value
+WHERE columnY = AnotherValue;
 
 example:
 UPDATE Person 
-Set last_name = 'Yu'
+Set last_name = 'Glass'
 WHERE person_id = 1;
 
 
-step 14: targeted data removal
 
-DELECT FROM Person 
-Where person_id = 2;
+step 14: Targeted Data Removal
+DELECT FROM TableName
+WHERE column = value;
+
+DELECT FROM Perso
+WHERE person_id = 2;
 
 
 
-
-
-step 15: data anomalies
+step 15: Data Anomalies
 multiple insertions of the same data
-when you have multiple rows you end up deleting the data you are not supposed to delete.
+Data Anomalies: when same data insert over and over again in different rows with different values
+Deletion Anomalies: when you have multiple rows you end up deleting the data you are not supposed to delete.
+
+solution - proper design - normalization(week4), proper entity(week2-3)
+
+
 
 example:
 CREATE TABLE Restaurant (
@@ -140,24 +146,28 @@ restaurant_name VARCHAR(32) NOT NULL,
 open_since DATE NOT NULL);
 
 INSERT INTO Restaurant (restaurant_id, restaurant_name, open_since)
-VALUES (101, 'Happy Town', CAST('23-APR-2021' AS DATE));      //CAST it as a date with a specific format 23-APR-2021 for SQL
+VALUES (101, 'Happy Town', CAST('23-APR-2021' AS DATE));      //'23-APR-2021' is a string literal, CAST it AS DATE. specific format 23-APR-2021 for SQL
 INSERT INTO Restaurant (restaurant_id, restaurant_name, open_since)
-VALUES (102, 'Fun Town', '13-MAY-2021');    //converted
-
+VALUES (102, 'Fun Town', '13-MAY-2021');    //converted to US format 2021-05-13 but can change, can be without CAST and AS DATE
 
 
 CREATE TABLE Orders(
 order_id DECIMAL(12) NOT NULL PRIMARY KEY,
-product_name VARCHAR(32) NOT NULL,
-quantity DECIMAL(12) NOT NULL),
-price DECIMAL(12) NOT NULL),
+product_name VARCHAR(64) NOT NULL,
+quantity DECIMAL(3) NOT NULL,
+price DECIMAL(8,2) NOT NULL,    // 8 to the lest, 2 to the right
 business_name VARCHAR(64) NOT NULL);
 
 INSERT INTO Orders(order_id, product_name, quantity, price, business_name)
-VALUE
+VALUE(1, 'Widget', 10, 10.99, 'ACME');
+VALUE(5, 'Widget', 5, 8.99, 'Amazon');
+VALUE(3, 'Pencil', 100, 0.59, 'ACME');
 
+DELETE FROM Orders
+WHERE business_name = 'Amazon';   //by doing it, we have no more data related for amazon, better to have different tables like product table, business table, etc
 
 
 Step 16 – File and Database Table Comparison
+- layout in different format and compare them, xml, json, txt
 
-
+ 
