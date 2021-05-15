@@ -79,8 +79,8 @@ Column1 Datatype 2 NOT NULL...);      // all row must have a value, can not be n
 
 example:
 CREATE TABLE Person( 
-person_id DECIMAL(12),  NOT NULL PRIMARY KEY,   //unique identifier
-first_name VARCHAR(256), NOT NULL
+person_id DECIMAL(12) NOT NULL PRIMARY KEY,   //unique identifier
+first_name VARCHAR(256) NOT NULL
 last_name VARCHAR(256) NOT NULL
 );
 
@@ -119,7 +119,7 @@ step 14: Targeted Data Removal
 DELECT FROM TableName
 WHERE column = value;
 
-DELECT FROM Perso
+DELECT FROM Person
 WHERE person_id = 2;
 
 
