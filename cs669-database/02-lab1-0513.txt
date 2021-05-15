@@ -119,7 +119,7 @@ step 14: Targeted Data Removal
 DELECT FROM TableName
 WHERE column = value;
 
-DELECT FROM Person
+DELETE FROM Person
 WHERE person_id = 2;
 
 
