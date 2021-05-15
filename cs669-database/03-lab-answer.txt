@@ -34,7 +34,7 @@ VALUES(1, 'Costa Rica', 'Relaxing Hot Springs',  CAST('13-JAN-2019' AS DATE),  C
 INSERT INTO Vacation (VacationId, Location, Description, StartedOn, EndedOn)
 VALUES(2, 'Bora Rica', 'Exciting Snorkeling',  CAST('5-MAR-2019' AS DATE),  CAST('15-MAR-2019' AS DATE));
 INSERT INTO Vacation (VacationId, Location, Description, StartedOn, EndedOn)
-VALUES(3, 'Jamaica', Null,  CAST('10-DEC-2018' AS DATE),  CAST('28-DEC-2019' AS DATE));
+VALUES(3, 'Jamaica', Null,  CAST('10-DEC-2018' AS DATE),  CAST('28-DEC-2018' AS DATE));
 
 SELECT * FROM Vacation;
 
