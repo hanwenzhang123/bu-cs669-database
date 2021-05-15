@@ -153,9 +153,9 @@ price DECIMAL(8,2) NOT NULL,    // 8 to the lest, 2 to the right
 business_name VARCHAR(64) NOT NULL);
 
 INSERT INTO Orders(order_id, product_name, quantity, price, business_name)
-VALUE(1, 'Widget', 10, 10.99, 'ACME');
-VALUE(5, 'Widget', 5, 8.99, 'Amazon');
-VALUE(3, 'Pencil', 100, 0.59, 'ACME');
+VALUES(1, 'Widget', 10, 10.99, 'ACME');
+VALUES(5, 'Widget', 5, 8.99, 'Amazon');
+VALUES(3, 'Pencil', 100, 0.59, 'ACME');
 
 DELETE FROM Orders
 WHERE business_name = 'Amazon';   //by doing it, we have no more data related for amazon,  no longer exist in our database
