@@ -69,29 +69,29 @@ SELECT * FROM Vacation;
 
 Session3:
 CREATE TABLE Products( 
-product_id DECIMAL (12) NOT NULL PRIMARY KEY,
+order_id DECIMAL (12) NOT NULL PRIMARY KEY,
 order_date DATE NOT NULL,
 product_name VARCHAR(64) NOT NULL,
 quantity DECIMAL(3) NOT NULL,
+unit_price DECIMAL(8,2) NOT NULL,
 total_price DECIMAL(8,2) NOT NULL
 );
 
-INSERT INTO Products(product_id, order_date, product_name, quantity, total_price)
-VALUES(1, CAST('13-MAY-2021'AS DATE), 'cup', 10, 120);
-INSERT INTO Products(product_id, order_date, product_name, quantity, total_price)
-VALUES(2, CAST('14-MAY-2021'AS DATE), 'mug', 30, 250);
-INSERT INTO Products(product_id, order_date, product_name, quantity, total_price)
-VALUES(3, CAST('15-MAY-2021'AS DATE), 'cup', 8, 100);
-INSERT INTO Products(product_id, order_date, product_name, quantity, total_price)
-VALUES(4, CAST('15-MAY-2021'AS DATE), 'bottle', 20, 200);
+INSERT INTO Products(order_id, order_date, product_name, quantity, unit_price, total_price)
+VALUES(1, CAST('13-MAY-2021'AS DATE), 'cup', 10, 12, 120);
+INSERT INTO Products(order_id, order_date, product_name, quantity, unit_price, total_price)
+VALUES(2, CAST('14-MAY-2021'AS DATE), 'mug', 30, 8, 240);
+INSERT INTO Products(order_id, order_date, product_name, quantity, unit_price, total_price)
+VALUES(3, CAST('15-MAY-2021'AS DATE), 'cup', 10, 10, 100);
+INSERT INTO Products(order_id, order_date, product_name, quantity, unit_price, total_price)
+VALUES(4, CAST('15-MAY-2021'AS DATE), 'bottle', 20, 11, 220);
 
 SELECT * FROM Products;
 
-SELECT product_name, quantity, total_price
+SELECT product_name, quantity, unit_price, total_price
 FROM Products
 WHERE product_name = 'cup';
 
-SELECT * FROM Products;
 
 DELETE FROM Products
 WHERE product_name = 'mug';  
