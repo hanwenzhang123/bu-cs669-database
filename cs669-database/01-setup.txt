@@ -1,0 +1,17 @@
+setup as a new user
+Oracle
+CREATE USER username IDENTIFIED BY password DEFAULT TABLESPACE users TEMPORARY TABLESPACE temp;
+GRANT connect, resource TO username;
+
+MSSQL
+CREATE DATABASE database_name;
+GO;
+USE database_name;
+
+PostgreSQL 
+CREATE DATABASE database_name;
+
+Saving Your Data
+COMMIT;
+
+  
