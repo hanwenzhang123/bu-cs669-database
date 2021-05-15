@@ -1,10 +1,4 @@
-An instance is a collection of SQL Server databases run by a single SQL Server service
-
-MSSQL - sqlcmd for command-line window
-execute - press F5 or select lines of code to be executed then press F5. 
-column - control + space - show existing column
-
-datatype:
+Datatype:
 decimal - number
 DECIMAL(12) - number - up to 12 digits
 varchar - string
