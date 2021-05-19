@@ -1,8 +1,8 @@
-modeling like a blueprint - allows to visualize, analyze before establish
+Modeling is a collection of information that is organized, so data can be easily stored, managed, updated and retrieved. 
+
+Modeling like a blueprint - allows to visualize, analyze before establish
 
 the relationship model - row in same and different relations can be related
-
-file system: structural dependence
 
 
 Operations on relations
@@ -21,6 +21,5 @@ not null - must be with value
 unique - does not require the column be not null, like ssn can be null like someone does not have a ssn
 check - boolean, true or false, any column in the table, hourly rate or salary rate, both can not be filled in same time
     e.g. CHECK (hourly-rate IS NOT NULL OR salary IS NOT NULL)) AND NOT (hourly-rate IS NOT NULL AND salary IS NOT NULL)
-
 
   
