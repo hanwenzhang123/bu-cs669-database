@@ -23,3 +23,5 @@ check - boolean, true or false, any column in the table, hourly rate or salary r
     e.g. CHECK (hourly-rate IS NOT NULL OR salary IS NOT NULL)) AND NOT (hourly-rate IS NOT NULL AND salary IS NOT NULL)
 
   
+The fundamentals you define in your structural database rules – significant entities, relationships, and constraints 
+– determines the structure of your database throughout all phases of development. 
