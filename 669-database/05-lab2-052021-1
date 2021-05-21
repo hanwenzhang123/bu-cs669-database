@@ -59,13 +59,32 @@ VALUES(103, 'Five-course luxurious meal', CAST('13-Jul-2012' AS DATE), NULL);
 
 
 
-
 Step 3 – Invalid Reference Attempt
 
 INSERT INTO Meal (meal_nr, description, date_served, restaurant_id)
 VALUES(104, 'Juicy entree and french fries', CAST('17-Jul-2012' AS DATE), 57);
 
 make sure everything has exist in the table, parent must exist
+
+
+
+JOIN
+Summarize:
+a. what a join is and how joins help answer questions using related data, and
+b. the similarities and differences between an inner join, a left join, a right join, and a full
+outer join.
+Answer:
+a. JOIN helps join data from two different tables together to form a single set of data. We can analyze data using the common factors associated with both tables to answer questions using related data and specific the columns.
+b.
+Inner Join: used to join or combine multiple tables. It will contain ONLY the matching records
+from both columns and display all rows that have the keys common to both tables.
+Left Join: It will contain the matching records from both columns as well as display all additional
+rows from the first table since the ‘left’ table is considered the first table
+Right Join: It will contain the matching records from both columns as well as display all
+additional rows from the second table since the ‘right’ table is considered the second
+table
+Full Outer Join: It will display all common rows as well as all the uncommon rows from both the
+tables.
 
 
 Step 4 – Listing Pizzas and Toppings
