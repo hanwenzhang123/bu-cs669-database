@@ -2,6 +2,10 @@ Section One – Relating Data
 
 Step 1 – Creating the Table Structure
 
+ending fk is for foreign key
+CONSTRAINT is for making the name of the foreign key
+order matters in the reference
+constraint must be valid all the time
 
 CREATE TABLE Restaurant (
 restaurant_id DECIMAL(12) PRIMARY KEY,
@@ -48,14 +52,14 @@ Step 3 – Invalid Reference Attempt
 INSERT INTO Meal (meal_nr, description, date_served, restaurant_id)
 VALUES(104, 'Juicy entree and french fries', CAST('17-Jul-2012' AS DATE), 57);
 
-
+make sure everything has exist in the table, parent must exist
 
 
 Step 4 – Listing Pizzas and Toppings
 
 SELECT description, date_served, name
 FROM Meal
-JOIN Restaurant ON Meal.restaurant_id = Restaurant.restaurant_id;
+JOIN Restaurant ON Meal.restaurant_id = Restaurant.restaurant_id;   //on is boolean
 
 
 //List the name of all restaurants, ordered alphabetically. If the restaurant served any meals, list the description and date served of each meal.
@@ -73,6 +77,8 @@ FROM Meal
 FULL JOIN Restaurant ON Meal.restaurant_id = Restaurant.restaurant_id
 ORDER BY description DESC;
 
+LEFT - first
+RIGHT - second
 
 
 Step 5 – Listing All Pizzas
