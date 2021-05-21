@@ -55,9 +55,9 @@ FROM   Example100;
 Component 3: Formatting Constructs
 //the first argument to format is the number and the second argument is a series of characters that describes how we want to format the number
 
-//Oracle - to_char()
+//Oracle/Postgres - to_char()
 SELECT to_char(100, $999.99);   //the initial three “9” digits indicate three digits to the left of the decimal point; last two “9” digits indicate we want to display two digits to the right of the decimal point.
-//SQL Server/Postgres  - format()
+//SQL Server  - format()
 SELECT format(100, $.00);
 
 
@@ -71,11 +71,6 @@ Step 9 – Using Expressions
 
 
 Step 10 – Advanced Formatting
-the expression “1 || ‘ at a time’” in oracle will produce a result of “1 at a time”, as shown below.
-
-
-
-
-  
+the expression “1 || ‘ at a time’” in oracle will produce a result of “1 at a time”, as shown below.  
 
 
