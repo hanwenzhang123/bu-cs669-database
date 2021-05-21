@@ -61,16 +61,12 @@ SELECT to_char(100, $999.99);   //the initial three “9” digits indicate thre
 SELECT format(100, $.00);
 
 
-
 Component 4: SQL Client Choices
 
 
-
-
 Step 9 – Using Expressions
-
-
+  
+  
 Step 10 – Advanced Formatting
 the expression “1 || ‘ at a time’” in oracle will produce a result of “1 at a time”, as shown below.  
-
-
+  
