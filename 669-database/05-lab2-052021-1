@@ -7,6 +7,19 @@ CONSTRAINT is for making the name of the foreign key
 order matters in the reference
 constraint must be valid all the time
 
+CREATE TABLE first_letters (
+first_letter_id DECIMAL(1) NOT NULL PRIMARY KEY,
+first_letter CHAR(1) NOT NULL);
+
+CREATE TABLE words (
+word VARCHAR(32) NOT NULL,
+first_letter_id DECIMAL(1),
+CONSTRAINT first_letter_fk
+FOREIGN KEY (first_letter_id)
+REFERENCES first_letters(first_letter_id));
+
+
+
 CREATE TABLE Restaurant (
 restaurant_id DECIMAL(12) PRIMARY KEY,
 name VARCHAR(64) NOT NULL
@@ -20,7 +33,7 @@ restaurant_id DECIMAL(12)
 );
 
 ALTER TABLE Meal        //An ALTER TABLE command lets us modify all aspects of the structure of a table. 
-ADD CONSTRAINT meal_pk      //ADD CONSTRAINT  is the identifier that names our constraint.
+ADD CONSTRAINT meal_pk      //ADD CONSTRAINT to indicate that we are specifically adding a constraint. it is the identifier that names our constraint.
 PRIMARY KEY(meal_nr);
 
 ALTER TABLE Meal
