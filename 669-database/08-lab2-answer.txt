@@ -113,3 +113,19 @@ WHERE date_available >= CAST('01-JAN-2021' AS DATE)
 AND price <= 10
 
 
+ALTER TABLE Pizza
+ADD special_price decimal(4, 2) GENERATED ALWAYS AS (price / 2) STORED;
+
+SELECT * FROM Pizza;
+
+
+ALTER TABLE Pizza
+ADD is_signature BOOLEAN GENERATED ALWAYS AS (date_available >= CAST('01-MAY-2020' AS DATE)
+AND price >= 9.55
+AND NOT name = 'Plain')
+STORED;
+
+SELECT * 
+FROM Pizza
+WHERE is_signature=true;
+ 
