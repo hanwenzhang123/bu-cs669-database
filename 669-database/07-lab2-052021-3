@@ -31,15 +31,13 @@ NOT (first_name = ‘Bill’ AND last_name = ‘Glass’)
 
 
 
-
 Step 12 – Using Boolean Expressions in Queries
 The <> operator yields true if the left‐hand value is not equal to the right‐hand value, and false otherwise
 The expression last_name <> ‘Glass’ would match any row where the last name is not “Glass”.
 
 
-Step 13 – Using Generated Columns
 
- 
+Step 13 – Using Generated Columns 
 Code: Multiply Table in Oracle and SQL Server
 CREATE TABLE Multiply (
 x decimal(4) NOT NULL,
