@@ -71,5 +71,14 @@ FROM Pizza
 RIGHT JOIN Topping on Topping.pizza_id = Pizza.pizza_id
 ORDER BY topping_name DESC;
 
+SELECT name, topping_name
+FROM Pizza
+FULL JOIN Topping on Topping.pizza_id = Pizza.pizza_id
+ORDER BY name;
 
+SELECT name, topping_name
+FROM Pizza
+FULL JOIN Topping on Topping.pizza_id = Pizza.pizza_id
+ORDER BY topping_name;
   
+ 
