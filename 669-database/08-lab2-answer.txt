@@ -98,3 +98,18 @@ LEFT JOIN Pizza on Topping.pizza_id = Pizza.pizza_id
 ORDER BY topping_name;
 
 
+SELECT name, price
+FROM Pizza
+WHERE date_available >= CAST('01-MAY-2020' AS DATE)
+AND price >= 9.55
+AND NOT name = 'Plain'
+
+INSERT INTO Pizza (pizza_id, name, date_available, price)
+VALUES (5, 'Cheesy Lover', CAST('22-MAY-2021' AS DATE), 10);
+
+SELECT name, price
+FROM Pizza
+WHERE date_available >= CAST('01-JAN-2021' AS DATE)
+AND price <= 10
+
+
