@@ -82,3 +82,19 @@ FULL JOIN Topping on Topping.pizza_id = Pizza.pizza_id
 ORDER BY topping_name;
   
  
+
+SELECT name, to_char(price, '$999.99') AS price
+FROM Pizza;
+
+SELECT name, to_char(price - 1.75, '$999.99') AS discounted_price
+FROM Pizza;
+
+DELETE FROM Topping
+WHERE topping_name = 'Chicken';
+
+SELECT topping_name || ' ( ' || name || ' - ' || to_char(price - 1.75, '$999.99') || ' ) ' AS discounted_price_advanced_formatting
+FROM Topping
+LEFT JOIN Pizza on Topping.pizza_id = Pizza.pizza_id
+ORDER BY topping_name;
+
+
