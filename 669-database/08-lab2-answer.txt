@@ -44,6 +44,32 @@ SELECT * FROM Pizza;
 
 SELECT * FROM Topping;
 
-
 INSERT INTO Topping (topping_id, topping_name, pizza_id)
 VALUES (109, 'Steak', 5);
+
+SELECT name, topping_name
+FROM Pizza
+JOIN Topping on Topping.pizza_id = Pizza.pizza_id
+
+SELECT name, date_available, topping_name
+FROM Pizza
+LEFT JOIN Topping on Topping.pizza_id = Pizza.pizza_id
+ORDER BY date_available;
+
+SELECT name, date_available, topping_name
+FROM Topping
+RIGHT JOIN Pizza on Topping.pizza_id = Pizza.pizza_id
+ORDER BY date_available;
+
+SELECT topping_name, name
+FROM Topping
+LEFT JOIN Pizza on Topping.pizza_id = Pizza.pizza_id
+ORDER BY topping_name DESC;
+
+SELECT topping_name, name
+FROM Pizza
+RIGHT JOIN Topping on Topping.pizza_id = Pizza.pizza_id
+ORDER BY topping_name DESC;
+
+
+  
