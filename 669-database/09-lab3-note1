@@ -145,9 +145,69 @@ Common aggregate functions include: Average (i.e., arithmetic mean) Count.
 
 Step 4 – Grouping Aggregate Results
 
+Code: Obtaining the Smallest Price (No Group)
+--Obtain the least expensive price.
+SELECT MIN(cost_per_night) AS least_expensive
+FROM Accommodations;
+
+ 
+Code: Obtaining the Smallest Price Per Resort
+--Obtain the least expensive price per resort.
+SELECT resort_id, MIN(cost_per_night) AS least_expensive
+FROM   Accommodations
+GROUP BY resort_id;
+
+run once per unique resort_id, rather than once for the entire result set.
+
+
+--Obtain the least expensive price per resort, with resort name.
+SELECT name, MIN(cost_per_night) AS least_expensive
+FROM   Accommodations
+JOIN   Resort ON Resort.resort_id = Accommodations.resort_id
+GROUP BY Resort.resort_id, name;
+
+
+
+
 Step 5 – Limiting Results by Aggregation
+the ability to limit the result set by aggregated values (rather than values coming directly from a table).
+
+WHERE clause limits the result set based upon values in individual rows
+HAVING clause limits the result set based upon aggregate results. 
+
+
+Code: Cheapest Price Per Resort Less Than $225
+--Obtain the least expensive price per resort, less then $225.
+SELECT name, MIN(cost_per_night) AS least_expensive
+FROM   Accommodations
+JOIN   Resort ON Resort.resort_id = Accommodations.resort_id
+GROUP BY Resort.resort_id, name
+HAVING  MIN(cost_per_night) < 225;
+
+
+
 
 Step 6 – Adding Up Values
+ 
+Code: Resorts Bringing at Least $800 Revenue Per Night
+--Show resorts that bring in at least $800 revenue per night.
+SELECT name, SUM(cost_per_night) AS total_revenue
+FROM   Accommodations
+JOIN   Resort ON Resort.resort_id = Accommodations.resort_id
+GROUP BY Resort.resort_id, Resort.name
+HAVING SUM(cost_per_night) >= 800;
+
+
 
 Step 7 – Integrating Aggregation with Other Constructs
 
+ 
+Code: Intermediate Result with no Aggregation
+--Show all accommodations along with their resorts and types, that cost more than $200.
+SELECT     *
+FROM       Resort
+JOIN       Accommodations ON  Accommodations.resort_id = Resort.resort_id
+                          AND Accommodations.cost_per_night >= 200
+RIGHT JOIN Resort_type ON Resort_type.resort_type_id = Resort.resort_type_id;
+
+  
