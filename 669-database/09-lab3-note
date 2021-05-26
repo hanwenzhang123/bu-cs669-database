@@ -1,0 +1,71 @@
+Section One – Aggregating Data
+
+Step 1 – Creating Table Structure and Data
+
+CREATE TABLE Resort_type (
+resort_type_id DECIMAL(12) NOT NULL PRIMARY KEY,
+resort_type VARCHAR(64) NOT NULL);
+
+CREATE TABLE Resort (
+resort_id DECIMAL(12) NOT NULL PRIMARY KEY,
+resort_type_id DECIMAL(12) NOT NULL,
+name VARCHAR(255) NOT NULL,
+FOREIGN KEY (resort_type_id) REFERENCES Resort_type(resort_type_id));
+
+CREATE TABLE Accommodations (
+accommodations_id DECIMAL(12) NOT NULL PRIMARY KEY,
+resort_id DECIMAL(12) NOT NULL,
+description VARCHAR(255) NOT NULL,
+cost_per_night DECIMAL(8,2) NULL,
+FOREIGN KEY (resort_id) REFERENCES Resort(resort_id));
+
+
+
+--Resort types.
+INSERT INTO Resort_type(resort_type_id, resort_type)
+VALUES(1, 'Ocean');
+INSERT INTO Resort_type(resort_type_id, resort_type)
+VALUES(2, 'Lakeside');
+INSERT INTO Resort_type(resort_type_id, resort_type)
+VALUES(3, 'Mountaintop');
+INSERT INTO Resort_type(resort_type_id, resort_type)
+VALUES(4, 'Country');
+
+--Resorts.
+INSERT INTO Resort(resort_id, name, resort_type_id)
+VALUES(101, 'Light of the Ocean', 1); --Ocean resort type
+INSERT INTO Resort(resort_id, name, resort_type_id)
+VALUES(102, 'Breathtaking Bahamas', 1); --Ocean resort type
+INSERT INTO Resort(resort_id, name, resort_type_id)
+VALUES(103, 'Mountainous Mexico', 3); --Mountaintop resort type
+INSERT INTO Resort(resort_id, name, resort_type_id)
+VALUES(104, 'Greater Lakes', 2); --Lakeside resort type
+
+--Accommodations
+INSERT INTO Accommodations(accommodations_id, description, cost_per_night, resort_id)
+VALUES(1001, 'Bungalow 1', 289, 101); --Accommodation for Light of the Ocean resort.
+INSERT INTO Accommodations(accommodations_id, description, cost_per_night, resort_id)
+VALUES(1002, 'Bungalow 2', 289, 101); --Accommodation for Light of the Ocean resort.
+INSERT INTO Accommodations(accommodations_id, description, cost_per_night, resort_id)
+VALUES(1003, 'Bungalow 3', 325, 101); --Accommodation for Light of the Ocean resort.
+INSERT INTO Accommodations(accommodations_id, description, cost_per_night, resort_id)
+VALUES(1004, 'Suite 101', 199, 102); --Accommodation for Breathtaking Bahamas.
+INSERT INTO Accommodations(accommodations_id, description, cost_per_night, resort_id)
+VALUES(1005, 'Suite 102', 199, 102); --Accommodation for Breathtaking Bahamas.
+INSERT INTO Accommodations(accommodations_id, description, cost_per_night, resort_id)
+VALUES(1006, 'Suite 201', 250, 102); --Accommodation for Breathtaking Bahamas.
+INSERT INTO Accommodations(accommodations_id, description, cost_per_night, resort_id)
+VALUES(1007, 'Suite 202', 250, 102); --Accommodation for Breathtaking Bahamas.
+INSERT INTO Accommodations(accommodations_id, description, cost_per_night, resort_id)
+VALUES(1008, 'Room 10', 150, 103); --Accommodation for Mountainous Mexico.
+INSERT INTO Accommodations(accommodations_id, description, cost_per_night, resort_id)
+VALUES(1009, 'Room 20', null, 103); --Accommodation for Mountainous Mexico.
+INSERT INTO Accommodations(accommodations_id, description, cost_per_night, resort_id)
+VALUES(1010, 'Cabin A', 300, 104); --Accommodation for Greater Lakes.
+INSERT INTO Accommodations(accommodations_id, description, cost_per_night, resort_id)
+VALUES(1011, 'Cabin B', null, 104); --Accommodation for Greater Lakes.
+INSERT INTO Accommodations(accommodations_id, description, cost_per_night, resort_id)
+VALUES(1012, 'Cabin C', 350, 104); --Accommodation for Greater Lakes.
+
+
+Step 2 – Counting Matches
