@@ -68,4 +68,46 @@ INSERT INTO Accommodations(accommodations_id, description, cost_per_night, resor
 VALUES(1012, 'Cabin C', 350, 104); --Accommodation for Greater Lakes.
 
 
+
 Step 2 – Counting Matches
+the MAX function returns the highest numerical value across multiple rows, 
+the MIN function returns the smallest numerical value across multiple rows.
+the COUNT function counts the number of rows in the table.
+
+--Count the number of accommodations in the table.
+SELECT COUNT(*) AS nr_accommodations
+FROM Accommodations;    //12
+
+
+1. Retrieve the rows and columns specified in the SELECT/FROM/WHERE clause. 
+2. Apply the aggregate function to these rows and columns.
+
+
+
+you can use the name of a column instead of “*” when instructing COUNT what to count. 
+When the name of a column is used, COUNT counts the number of rows where the value is not null for that column.
+
+--Count the number of non-null costs in the table.
+SELECT COUNT(cost_per_night) AS nr_accommodations
+FROM Accommodations;    //10
+
+
+
+instruct COUNT to count distinct values instead of all values.
+
+--Count the number of non-distinct and distinct foreign key references.
+SELECT COUNT(resort_id) AS nr_non_distinct,     //12
+       COUNT(DISTINCT resort_id) AS nr_distinct       //4
+FROM Accommodations;
+
+This command counts the resort_id column twice, the first counting all values, and the second only counting distinct values. 
+
+
+Note that you can also use add a WHERE clause to a query with an aggregate function. 
+When a WHERE clause is included, the results are filtered by the WHERE clause condition before the aggregate function is applied. 
+For example, if there are 10 rows in a table, and the WHERE clause limits the results to 5 of those rows, the COUNT aggregate function would return 5 instead of 10.
+
+
+
+
+  
