@@ -128,6 +128,19 @@ SELECT FORMAT(MIN(cost_per_night), '$.00') AS least_expensive
 FROM Accommodations;
 
 Accommodations that have no cost per night are not taken into account, because the MIN function thus ignores null values. 
+multiple aggregate functions can be included in the same query, separated by a comma 
+
+
+SELECT series_name, 
+TO_CHAR(MIN(suggested_price), '$999.99') AS least_expensive, 
+TO_CHAR(MAX(suggested_price), '$999.99') AS most_expensive
+FROM Movie_series
+GROUP BY series_name;
+
+column "movie_series.series_name" must appear in the GROUP BY clause or be used in an aggregate function
+
+
+
 
 Step 4 – Grouping Aggregate Results
 
