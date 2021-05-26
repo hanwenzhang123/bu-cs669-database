@@ -119,8 +119,15 @@ HAVING COUNT(movie_id) >= 6;
 
 
 Step 6 – Adding Up Values
+SELECT series_name, SUM(length_in_minutes) AS how_long
+FROM Movie_series
+JOIN Movie ON Movie.movie_series_id = Movie_series.movie_series_id
+GROUP BY series_name
+HAVING SUM(length_in_minutes) > 540;
 
-
-HAVING SUM(length) > 540;
 
 Step 7 – Integrating Aggregation with Other Constructs
+
+
+
+ 
