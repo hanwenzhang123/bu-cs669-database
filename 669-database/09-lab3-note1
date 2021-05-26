@@ -110,7 +110,25 @@ For example, if there are 10 rows in a table, and the WHERE clause limits the re
 
 
 Step 3 – Determining Highest and Lowest
-  
+
+--Obtain the least expensive price.
+SELECT MIN(cost_per_night) AS least_expensive
+FROM Accommodations;
+
+The MIN function returns the value that is the lowest for the column indicated in parentheses. 
+
+additionally format the value as a currency for optimal human‐readable representation.
+
+//Oracle, PostgreSQL
+SELECT TO_CHAR(MIN(cost_per_night), '$999.99') AS least_expensive
+FROM Accommodations;
+
+//MSSQL
+SELECT FORMAT(MIN(cost_per_night), '$.00') AS least_expensive
+FROM Accommodations;
+
+Accommodations that have no cost per night are not taken into account, because the MIN function thus ignores null values. 
+
 Step 4 – Grouping Aggregate Results
 
 Step 5 – Limiting Results by Aggregation
