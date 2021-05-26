@@ -9,7 +9,7 @@ genre_name VARCHAR(64) NOT NULL
 
 CREATE TABLE Creator (
 creator_id DECIMAL(12) NOT NULL PRIMARY KEY,
-first_name VARCHAR(64) NOT NULL
+first_name VARCHAR(64) NOT NULL,
 last_name VARCHAR(64) NOT NULL
 );
 
@@ -19,7 +19,7 @@ genre_id DECIMAL(12) NOT NULL,
 creator_id DECIMAL(12) NOT NULL,
 series_name VARCHAR(255) NOT NULL,
 suggested_price DECIMAL(8,2) NULL,
-FOREIGN KEY (genre_id) REFERENCES Genre(genre_id)
+FOREIGN KEY (genre_id) REFERENCES Genre(genre_id),
 FOREIGN KEY (creator_id) REFERENCES Creator(creator_id)
 );
 
@@ -57,7 +57,7 @@ VALUES(101, 1, 01, 'Star Wars', 129.99);
 INSERT INTO Movie_series(movie_series_id, genre_id, creator_id, series_name, suggested_price)
 VALUES(102, 2, 02, 'Toy Story', 22.13);
 INSERT INTO Movie_series(movie_series_id, genre_id, creator_id, series_name, suggested_price)
-VALUES(103, 1, 03, 'Lord of the Rings');
+VALUES(103, 1, 03, 'Lord of the Rings', null);
 INSERT INTO Movie_series(movie_series_id, genre_id, creator_id, series_name, suggested_price)
 VALUES(104, 3, 04, 'Love Story', 99.99);
 INSERT INTO Movie_series(movie_series_id, genre_id, creator_id, series_name, suggested_price)
@@ -91,3 +91,6 @@ VALUES(1012, 105, 'Laughing', 88);
 
 
 Step 2 – Counting Matches
+SELECT COUNT(movie_id) AS long_movies 
+FROM Movie
+WHERE length_in_minutes >= 135;
