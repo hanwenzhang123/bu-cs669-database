@@ -138,7 +138,8 @@ FROM Movie_series
 GROUP BY series_name;
 
 column "movie_series.series_name" must appear in the GROUP BY clause or be used in an aggregate function
-
+In database management, an aggregate function or aggregation function is a function where the values of multiple rows are grouped together to form a single summary value. 
+Common aggregate functions include: Average (i.e., arithmetic mean) Count.
 
 
 
