@@ -103,9 +103,24 @@ FROM Movie_series;
 
 
 Step 4 – Grouping Aggregate Results
+SELECT series_name, COUNT(DISTINCT movie_id) AS number_of_movies
+FROM   Movie_series
+JOIN   Movie ON Movie.movie_series_id = Movie_series.movie_series_id
+GROUP BY series_name;
+
 
 Step 5 – Limiting Results by Aggregation
+SELECT genre_name, COUNT (movie_id) AS  number_of_movies
+FROM Movie_series
+JOIN Genre ON Genre.genre_id = Movie_series.genre_id
+JOIN Movie ON Movie.movie_series_id = Movie_series.movie_series_id
+GROUP BY genre_name
+HAVING COUNT(movie_id) >= 6;
+
 
 Step 6 – Adding Up Values
+
+
+HAVING SUM(length) > 540;
 
 Step 7 – Integrating Aggregation with Other Constructs
