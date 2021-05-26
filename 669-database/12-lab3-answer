@@ -94,3 +94,18 @@ Step 2 – Counting Matches
 SELECT COUNT(movie_id) AS long_movies 
 FROM Movie
 WHERE length_in_minutes >= 135;
+
+
+Step 3 – Determining Highest and Lowest
+SELECT TO_CHAR(MIN(suggested_price), '$999.99') AS least_expensive, 
+TO_CHAR(MAX(suggested_price), '$999.99') AS most_expensive
+FROM Movie_series;
+
+
+Step 4 – Grouping Aggregate Results
+
+Step 5 – Limiting Results by Aggregation
+
+Step 6 – Adding Up Values
+
+Step 7 – Integrating Aggregation with Other Constructs
