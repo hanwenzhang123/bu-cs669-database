@@ -109,5 +109,13 @@ For example, if there are 10 rows in a table, and the WHERE clause limits the re
 
 
 
-
+Step 3 – Determining Highest and Lowest
   
+Step 4 – Grouping Aggregate Results
+
+Step 5 – Limiting Results by Aggregation
+
+Step 6 – Adding Up Values
+
+Step 7 – Integrating Aggregation with Other Constructs
+
