@@ -166,7 +166,7 @@ FROM   Accommodations
 JOIN   Resort ON Resort.resort_id = Accommodations.resort_id
 GROUP BY Resort.resort_id, name;
 
-
+The GROUP BY statement is often used with aggregate functions (COUNT(), MAX(), MIN(), SUM(), AVG()) to group the result-set by one or more columns.
 
 
 Step 5 – Limiting Results by Aggregation
@@ -211,3 +211,13 @@ JOIN       Accommodations ON  Accommodations.resort_id = Resort.resort_id
 RIGHT JOIN Resort_type ON Resort_type.resort_type_id = Resort.resort_type_id;
 
   
+ 
+Code: All Resort Types along with Number Over 200
+--Show all resort types and the number of accommodations costing over $200, ordered least to greatest.
+SELECT     Resort_type.resort_type, COUNT(Accommodations.accommodations_id) AS nr_over_200
+FROM       Resort
+JOIN       Accommodations ON  Accommodations.resort_id = Resort.resort_id
+                          AND Accommodations.cost_per_night >= 200
+RIGHT JOIN Resort_type ON Resort_type.resort_type_id = Resort.resort_type_id
+GROUP BY   Resort_type.resort_type_id, Resort_type.resort_type
+ORDER BY   nr_over_200;
