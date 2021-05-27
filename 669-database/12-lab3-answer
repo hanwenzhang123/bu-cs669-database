@@ -127,7 +127,13 @@ HAVING SUM(length_in_minutes) > 540;
 
 
 Step 7 – Integrating Aggregation with Other Constructs
+SELECT first_name || ' ' || last_name AS creator_full_name, COUNT(Genre.genre_id) AS number_of_fantasy
+FROM Creator
+LEFT JOIN Movie_series ON Movie_series.creator_id = Creator.creator_id
+LEFT JOIN Movie ON Movie.movie_series_id = Movie_series.movie_series_id
+LEFT JOIN Genre ON Genre.genre_id = Movie_series.genre_id
+			   AND Genre.genre_name = 'Fantasy'
+GROUP BY first_name, last_name
+ORDER BY COUNT(Genre.genre_id) DESC;
 
-
-
- 
+  
