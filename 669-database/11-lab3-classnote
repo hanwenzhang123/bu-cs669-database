@@ -43,19 +43,33 @@ Once you have A, You can figure out B, A determines B
 
 What column determines what column
 
+
+
+1NF - basic
+
 if you know date, then you know todays topics
 
 once you know the photographer id then you know the name
 once you know date and tripod tag name then you know tripod model
 
 
-we must identify all candidate key
+Step 2: identify functional dependencies
+
+Step 3 - we must identify all candidate key
+
+Step 4 - identify partial dependencies
 
 partial dependency
 AB - CD
 B - C
 
-2NF and 3NF
+Step 5 -Removing dependent tables
+
+2NF 
+
+Identify transitive dependencies
+
+3NF
 
 know how to explain BCNF
 
