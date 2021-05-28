@@ -20,9 +20,6 @@ A - > BCD
 2NF eliminates partial dependencies.
 The table must contain no partial dependencies.
 
-Identify Transitive Dependencies
-Remove Transitive Dependencies - move to a different seperate table
-
 B depends on A, but not entirely
 
 
@@ -36,11 +33,10 @@ The column depends on another column which is not a primary key
 we can put the data to a new table 
 The table must not have transitive dependencies.
 
-Identify Non-Candidate Determinants
-Remove Non-Candidate Determinants
 
-Candidate key - unique and non-null identify a row like student_id in student table
-there are can be more than one candidate key in the table like student_id and student_phone
+Identify Transitive Dependencies
+Remove Transitive Dependencies - move to a different seperate table
+
 
 D -> B
 
@@ -51,6 +47,13 @@ BCNF eliminates every problematic single-valued dependency.
 It is not mandatory to go through 2NF and 3NF to move to BCNF.
 Simply apply the rule “every determinant must be a candidate key” repeatedly, extracting items to a new table, until the normalization is complete.
 This rule will also eliminate partial and transitive dependencies.
+
+Identify Non-Candidate Determinants
+Remove Non-Candidate Determinants
+
+Candidate key - unique and non-null identify a row like student_id in student table
+there are can be more than one candidate key in the table like student_id and student_phone
+
 
 X - Y
 
