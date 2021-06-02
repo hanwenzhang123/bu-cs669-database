@@ -33,14 +33,41 @@ CREATE SEQUENCE likes_seq START WITH 1;
 
 Step 2 – Populate Tables
 
---
 INSERT INTO Person
-VALUES(nextval('person_seq'),currval('customer_seq'),1000,CAST('17-DEC-2005' AS DATE));
+VALUES(nextval('person_seq'), 'Allan', 'Smith', 'allansmith123');
+INSERT INTO Person
+VALUES(nextval('person_seq'), 'Bryan', 'Brown', 'bryanbrown123');
+INSERT INTO Person
+VALUES(nextval('person_seq'), 'Charles', 'Williams', 'charleswilliams123');
+INSERT INTO Person
+VALUES(nextval('person_seq'), 'David', 'Johnson', 'davidjohnson123');
+INSERT INTO Person
+VALUES(nextval('person_seq'), 'Edison', 'Miller', 'edisonmiller123');
+
+SELECT * FROM Person;
+
+INSERT INTO Post (post_id, person_id, content, created_on, summary)
+VALUES(nextval('post_seq'), (SELECT person_id FROM Person WHERE first_name='Bryan'), 'Check out my social media accounts.', '04-01-2020', (SUBSTR('Check out my social media accounts.', 1, 12) || '...'));
+
+INSERT INTO Post (post_id, person_id, content, created_on, summary)
+VALUES(nextval('post_seq'), (SELECT person_id FROM Person WHERE first_name='Bryan'), 'Check out my social media accounts.', '04-01-2020', (SUBSTR(content, 1, 12) || '...'));
+
+
+
+SUBSTR('Just arrived in the New York!', 1, 12) || '...' AS summary;
+
+SUBSTR('Take a look at these new pics.', 1, 12) || '...' AS summary;
+SUBSTR('I love Miami beach YAY!!!', 1, 12) || '...' AS summary;
+SUBSTR('Happy Friday with Happy hours.', 1, 12) || '...' AS summary;
+SUBSTR('I am having a Monday Syndrome.', 1, 12) || '...' AS summary;
+SUBSTR('Too much work and too little pay.', 1, 12) || '...' AS summary;
+SUBSTR('Eating pizza in my backyard.', 1, 12) || '...' AS summary;
+
 INSERT INTO line_item
 VALUES(currval('customer_order_seq'),(SELECT item_id FROM item WHERE description='Plate'),95,950);
 
+SELECT SUBSTR(<value or column>, <start>, <length>) FROM <table>;
+
+
 
 Step 3 – Create Hardcoded Procedure
-
-
-
