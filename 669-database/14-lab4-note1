@@ -1,0 +1,80 @@
+Section One – Stored Procedures
+Step 1 – Create Table Structure 
+
+A sequence is a database object capable of generating unique primary key values, and is the preferred mechanism for doing so. 
+Sequences generate unique whole numbers, starting with the first, and incrementing to the next number each time a new value is needed. 
+The database guarantees a sequence will not generate the same number twice, thus making the values unique and suitable for primary keys.
+
+
+
+CREATE TABLE Customer(
+customer_id    DECIMAL(12) NOT NULL,
+customer_first VARCHAR(32),
+customer_last  VARCHAR(32),
+customer_total DECIMAL(12, 2),
+PRIMARY KEY (customer_ID));
+
+CREATE TABLE Item(
+item_id
+description
+price
+item_code
+PRIMARY KEY (item_id));
+DECIMAL(12) NOT NULL,
+ VARCHAR(64) NOT NULL,
+DECIMAL(10, 2) NOT NULL,
+VARCHAR(4) NOT NULL,
+
+CREATE TABLE Customer_order (
+order_id    DECIMAL(12) NOT NULL,
+customer_id DECIMAL(12) NOT NULL,
+order_total DECIMAL(12,2) NOT NULL,
+order_date  DATE NOT NULL,
+PRIMARY KEY (ORDER_ID),
+FOREIGN KEY (CUSTOMER_ID) REFERENCES customer);
+
+CREATE TABLE Line_item(
+order_id      DECIMAL(12) NOT NULL,
+item_id       DECIMAL(12) NOT NULL,
+item_quantity DECIMAL(10) NOT NULL,
+line_price    DECIMAL(12,2) NOT NULL,
+PRIMARY KEY (ORDER_ID, ITEM_ID),
+FOREIGN KEY (ORDER_ID) REFERENCES customer_order,
+FOREIGN KEY (ITEM_ID) REFERENCES item);
+
+
+
+The SQL syntax for creating a basic sequence is straightforward: 
+CREATE SEQUENCE <sequencename> START WITH 1
+
+
+For example, if we had a Person table and that table needed a sequence, 
+we would name the sequence “person_seq”.
+
+
+CREATE SEQUENCE customer_seq START WITH 1;
+CREATE SEQUENCE item_seq START WITH 1;
+CREATE SEQUENCE customer_order_seq START WITH 1;
+
+
+
+
+Step 2 – Populate Tables
+
+
+
+Step 3 – Create Hardcoded Procedure
+
+
+
+Step 4 – Create Reusable Procedure
+
+
+
+Step 5 – Create Deriving Procedure 
+
+
+
+Step 6 – Create Lookup Procedure
+
+
