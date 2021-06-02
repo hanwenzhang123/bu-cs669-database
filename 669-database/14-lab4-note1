@@ -6,7 +6,6 @@ Sequences generate unique whole numbers, starting with the first, and incrementi
 The database guarantees a sequence will not generate the same number twice, thus making the values unique and suitable for primary keys.
 
 
-
 CREATE TABLE Customer(
 customer_id    DECIMAL(12) NOT NULL,
 customer_first VARCHAR(32),
@@ -43,14 +42,11 @@ FOREIGN KEY (ORDER_ID) REFERENCES customer_order,
 FOREIGN KEY (ITEM_ID) REFERENCES item);
 
 
-
 The SQL syntax for creating a basic sequence is straightforward: 
 CREATE SEQUENCE <sequencename> START WITH 1
 
-
 For example, if we had a Person table and that table needed a sequence, 
 we would name the sequence “person_seq”.
-
 
 CREATE SEQUENCE customer_seq START WITH 1;
 CREATE SEQUENCE item_seq START WITH 1;
@@ -58,12 +54,83 @@ CREATE SEQUENCE customer_order_seq START WITH 1;
 
 
 
-
 Step 2 – Populate Tables
+
+// sequence’s current value
+
+--Insert first customer and order - it is important to only insert one at‐a‐time
+ we can control the order of inserts, and we insert the referencing values immediately after the referenced values
+INSERT INTO customer VALUES(nextval('customer_seq'),'John','Smith',0);
+INSERT INTO customer_order VALUES(nextval('customer_order_seq'),currval('customer_seq'), 506,CAST('18-DEC-2005' AS DATE));
+
+
+nextval(‘customer_seq’) is used to retrieve the next unique value for the primary key from customer_seq
+currval('customer_seq') to retrieve the current value of customer_seq.
+ Getting the current value does not advance the sequence; rather, it retrieves the last unique value retrieved. 
+combination of nextval and currval 
+ customer_order_id primary key value is retrieved with one sequence
+ the customer_id foreign key is retrieved with another sequence
+
+
+
+//subquery lookup
+
+Code: Inserting All Items
+INSERT INTO item VALUES(nextval('item_seq'),'Plate',10, 'P001');
+INSERT INTO item VALUES(nextval('item_seq'),'Bowl',11, 'B002');
+INSERT INTO item VALUES(nextval('item_seq'),'Knife',5, 'K003');
+INSERT INTO item VALUES(nextval('item_seq'),'Fork',5, 'F004');
+INSERT INTO item VALUES(nextval('item_seq'),'Spoon',5, 'S005');
+INSERT INTO item VALUES(nextval('item_seq'),'Cup',12, 'C006');
+
+ 
+Code: Inserting Line Items for First Order - using a subquery lookup
+--Create the line items for the first order.
+INSERT INTO line_item
+VALUES(currval('customer_order_seq'),(SELECT item_id FROM item WHERE description='Plate'),10,100);
+INSERT INTO line_item
+VALUES(currval('customer_order_seq'),(SELECT item_id FROM item WHERE description='Spoon'),2,10);
+INSERT INTO line_item
+VALUES(currval('customer_order_seq'),(SELECT item_id FROM item WHERE description='Bowl'),36,396);
+
+
+For retrieving the primary key of each item, 
+we use the subquery (SELECT item_id FROM item WHERE description=<item_description>). instead of hardcoding a single value
+ 
+ 
+Code: Viewing First Order
+--Get the first order details.
+SELECT customer_first, customer_last, description, item_quantity
+FROM   Customer
+JOIN   Customer_order ON customer_order.customer_id = Customer.customer_id
+JOIN   Line_item ON line_item.order_id = customer_order.order_id
+JOIN   Item ON item.item_id = line_item.item_id;
+
+ 
+Code: Viewing All Orders
+--Get all order details.
+SELECT customer_first, customer_last, order_date, description, item_quantity,
+line_price
+FROM   Customer
+JOIN   Customer_order ON customer_order.customer_id = Customer.customer_id
+JOIN   Line_item ON line_item.order_id = customer_order.order_id
+JOIN   Item ON item.item_id = line_item.item_id
+ORDER BY customer_first, customer_last, order_date, description;
 
 
 
 Step 3 – Create Hardcoded Procedure
+ 
+Code: Creating add_customer_harry Procedure
+CREATE OR REPLACE PROCEDURE ADD_CUSTOMER_HARRY()
+AS
+$proc$
+      BEGIN
+        INSERT INTO Customer (customer_id,customer_first,customer_last, customer_total)
+        VALUES (nextval('customer_seq'), 'Harry', 'Joker', 0);
+      END;
+$proc$ LANGUAGE plpgsql;
+
 
 
 
