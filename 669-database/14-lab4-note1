@@ -167,7 +167,6 @@ The CALL keyword is used to execute the stored procedure we have created.
 
 
 Step 4 – Create Reusable Procedure
-
  
 Code: Creating add_customer Procedure
 
@@ -191,6 +190,7 @@ $resuableproc$; -- closes the $$ quotation for the block
  
 
 Step 5 – Create Deriving Procedure 
+
 using a variable is the new skill for this step.
 A variable is a named placeholder that can store a value, and can later be referenced by name to retrieve the stored value.
 
@@ -223,4 +223,27 @@ END;
 
 Step 6 – Create Lookup Procedure
 
+setting the value of a variable based upon the results of a query. 
+Rather than the executor specifying the item_id, the stored procedure will take the item_code as a parameter, then lookup the item_id.
+ 
+Code: ADD_LINE_ITEM procedure
 
+CREATE OR REPLACE PROCEDURE ADD_LINE_ITEM(
+  p_item_code IN VARCHAR,
+  p_order_id IN DECIMAL,
+  p_quantity IN DECIMAL)
+  LANGUAGE plpgsql
+AS $$ 
+DECLARE
+v_item_id DECIMAL(12);
+v_line_price DECIMAL(12,2);
+BEGIN
+   --Get the item_id based upon the item_code, as well as the line total.
+   SELECT item_id, price * p_quantity
+   INTO   v_item_id, v_line_price
+   FROM   Item
+   WHERE  item_code = p_item_code;
+   --Insert the new line item.
+   INSERT INTO LINE_ITEM(item_id, order_id, item_quantity, line_price)
+   VALUES(v_item_id, p_order_id, p_quantity, v_line_price);
+END; $$;
