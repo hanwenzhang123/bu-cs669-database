@@ -210,3 +210,45 @@ SELECT * FROM Likes;
 
 
 
+Section Two – Triggers
+Step 7 – Single Table Validation Trigger
+
+-- Single Table Validation Trigger
+CREATE OR REPLACE FUNCTION valid_summary()
+ RETURNS TRIGGER LANGUAGE plpgsql
+ AS $trigfunc$
+ BEGIN
+   RAISE EXCEPTION USING MESSAGE = 'Summary format is incorrect!!!',
+   ERRCODE = 22000;
+ END;
+$trigfunc$;
+
+CREATE TRIGGER valid_summary
+BEFORE UPDATE OR INSERT ON Post
+FOR EACH ROW WHEN(New.summary != substring(New.content FROM 1 FOR 11) || '...')
+
+EXECUTE PROCEDURE valid_summary();
+
+
+--incorrect
+INSERT INTO Post
+VALUES(nextval('post_seq'), 
+	   (SELECT person_id FROM Person WHERE username='frankdavis123'), 
+	   'I am very tired today.', 
+	   '01-01-2021', 
+	   (SUBSTR('I am very tired today.', 1, 4) || '...'));
+
+
+--correct
+INSERT INTO Post
+VALUES(nextval('post_seq'), 
+	   (SELECT person_id FROM Person WHERE username='frankdavis123'), 
+	   'Good night world, I am going to sleep soon.', 
+	   '01-01-2021', 
+	   (SUBSTR(new.content, 1, 11) || '...'));
+         
+Step 8 – Cross-Table Validation Trigger
+
+
+Step 9 – History Trigger
+
