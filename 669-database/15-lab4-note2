@@ -1,1 +1,30 @@
+Section Two – Triggers
+Step 7 – Single Table Validation Trigger
+
+
+all triggers are associated to an event that determines when its code is executed.
+
+
+create a trigger that prevents the customer balance from being negative. 
+ 
+Code: No Negative Balance Validation Trigger
+
+CREATE OR REPLACE FUNCTION no_neg_bal_func()
+ RETURNS TRIGGER LANGUAGE plpgsql
+ AS $trigfunc$
+ BEGIN
+   RAISE EXCEPTION USING MESSAGE = 'Customer balance cannot be negative.',
+   ERRCODE = 22000;
+ END;
+$trigfunc$;
+CREATE TRIGGER no_neg_bal_trg
+BEFORE UPDATE OR INSERT ON Customer
+FOR EACH ROW WHEN(NEW.customer_total < 0)
+EXECUTE PROCEDURE no_neg_bal_func();
+
+
+Step 8 – Cross-Table Validation Trigger
+
+
+Step 9 – History Trigger
 
