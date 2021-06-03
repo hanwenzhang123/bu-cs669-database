@@ -185,6 +185,28 @@ SELECT * FROM Post;
 
 Step 6 – Create Lookup Procedure
 
+--Create Lookup Procedure
+CREATE OR REPLACE PROCEDURE add_like(
+  p_post_id IN DECIMAL,
+  p_username IN VARCHAR,
+  p_liked_on IN DATE)
+  LANGUAGE plpgsql
+AS $$ 
+DECLARE
+v_person_id DECIMAL(12);
+BEGIN
+   SELECT person_id
+   INTO v_person_id
+   FROM Person
+   WHERE username = p_username;
+   --Insert the new line item.
+   INSERT INTO LIKES(likes_id, post_id, person_id, liked_on)
+   VALUES(nextval('likes_seq'), p_post_id, v_person_id, p_liked_on);
+END; $$;
+
+CALL add_like(1, 'charleswilliams123', '06-03-2021');
+
+SELECT * FROM Likes;
 
 
 
