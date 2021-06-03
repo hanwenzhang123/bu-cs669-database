@@ -119,9 +119,11 @@ ORDER BY customer_first, customer_last, order_date, description;
 
 
 
+
 Step 3 – Create Hardcoded Procedure
  
 Code: Creating add_customer_harry Procedure
+
 CREATE OR REPLACE PROCEDURE ADD_CUSTOMER_HARRY()
 AS
 $proc$
@@ -132,13 +134,90 @@ $proc$
 $proc$ LANGUAGE plpgsql;
 
 
+CREATE OR REPLACE PROCEDURE
+- A stored procedure is to be created, and that the creation replaces any existing definition of a function with the same name. 
+
+The ADD_CUSTOMER_HARRY() word is the name of the procedure. 
+This name is an identifier, which means that the language allows us to define our own name.
+
+AS is a SQL keyword that is required by the language to define a function, but otherwise has no significant meaning.
+
+$proc$
+the procedural language always exists within a block within SQL.
+This block is simply a string literal from the prospective of the CREATE OR REPLACE PROCEDURE command is concerned. 
+we use dollar quoting, denoted by the characters “$$”, to write the procedure body instead of using single quotes.
+The “proc” in between the dollar signs is a label that adds to readability and is optional.
+
+
+The BEGIN keyword is part of the opening definition of a block, and is always accompanied with an END keyword which closes the block. 
+
+why is this SQL statement inside of the procedural language block? 
+Because certain SQL commands can be embedded inside of the procedural language in the right context.
+
+$proc$ LANGUAGE plpgsql
+procedure body is actually a quoted literal, and this second set of “$$” characters ends the quoted block.
+
+
+
+Code: Executing add_customer_harry Procedure
+CALL ADD_CUSTOMER_HARRY();
+ 
+The CALL keyword is used to execute the stored procedure we have created. 
+
 
 
 Step 4 – Create Reusable Procedure
 
+ 
+Code: Creating add_customer Procedure
 
+CREATE OR REPLACE PROCEDURE ADD_CUSTOMER( -- Create a new customer
+   first_name_arg IN VARCHAR, -- The new customer’s first name
+   last_name_arg IN VARCHAR) -- The new customer’s last name
+   LANGUAGE plpgsql
+AS -- Required by the syntax, but it doesn’t do anything in particular
+$resuableproc$ --opens the $$ quotation for the block
+BEGIN
+   INSERT INTO CUSTOMER(customer_id,customer_first,customer_last,customer_total)
+   VALUES(nextval('customer_seq'),first_name_arg,last_name_arg,0);
+    -- We start the customer with zero balance.
+END;
+$resuableproc$; -- closes the $$ quotation for the block
+
+
+ Code: Executing add_customer Procedure
+ CALL ADD_CUSTOMER('Mary', 'Smith');
+ 
+ 
 
 Step 5 – Create Deriving Procedure 
+using a variable is the new skill for this step.
+A variable is a named placeholder that can store a value, and can later be referenced by name to retrieve the stored value.
+
+Pseudocode for Basic Variable Use
+1: Declare variable v_item_code as a character string
+2: Calculate a unique value and store it in the v_item_code variable
+3: Insert whatever value is in the v_item_code variable into the item table
+
+ 
+Code: Creating add_item Procedure
+
+CREATE OR REPLACE PROCEDURE ADD_ITEM(
+  p_description IN VARCHAR, -- The item's description
+  p_price IN DECIMAL), -- The item's price
+  LANGUAGE plpgsql
+AS
+$$ DECLARE
+  v_item_code VARCHAR(4);     --Declare a variable to hold an item_code value.
+BEGIN
+   --Calculate the item_code value and put it into the variable.
+   v_item_code := SUBSTRING(p_description FROM 1 FOR 1) || FLOOR(RANDOM() * 1000);
+   --Insert a row with the combined values of the parameters and the variable.
+   INSERT INTO ITEM (item_id, description, price, item_code)
+   VALUES(nextval('item_seq'), p_description, p_price, v_item_code);
+END;
+$$; (NEXT VALUE FOR item_seq, @p_description, @p_price, @v_item_code);
+END;
 
 
 
