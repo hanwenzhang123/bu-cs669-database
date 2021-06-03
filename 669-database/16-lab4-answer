@@ -46,28 +46,86 @@ VALUES(nextval('person_seq'), 'Edison', 'Miller', 'edisonmiller123');
 
 SELECT * FROM Person;
 
-INSERT INTO Post (post_id, person_id, content, created_on, summary)
-VALUES(nextval('post_seq'), (SELECT person_id FROM Person WHERE first_name='Bryan'), 'Check out my social media accounts.', '04-01-2020', (SUBSTR('Check out my social media accounts.', 1, 12) || '...'));
-
-INSERT INTO Post (post_id, person_id, content, created_on, summary)
-VALUES(nextval('post_seq'), (SELECT person_id FROM Person WHERE first_name='Bryan'), 'Check out my social media accounts.', '04-01-2020', (SUBSTR(content, 1, 12) || '...'));
 
 
+DELETE FROM Post
+WHERE post_id IN (1, 2, 3, 4, 5);
 
-SUBSTR('Just arrived in the New York!', 1, 12) || '...' AS summary;
+ALTER SEQUENCE post_seq RESTART
 
-SUBSTR('Take a look at these new pics.', 1, 12) || '...' AS summary;
-SUBSTR('I love Miami beach YAY!!!', 1, 12) || '...' AS summary;
-SUBSTR('Happy Friday with Happy hours.', 1, 12) || '...' AS summary;
-SUBSTR('I am having a Monday Syndrome.', 1, 12) || '...' AS summary;
-SUBSTR('Too much work and too little pay.', 1, 12) || '...' AS summary;
-SUBSTR('Eating pizza in my backyard.', 1, 12) || '...' AS summary;
 
-INSERT INTO line_item
-VALUES(currval('customer_order_seq'),(SELECT item_id FROM item WHERE description='Plate'),95,950);
+INSERT INTO Post
+VALUES(nextval('post_seq'), (SELECT person_id FROM Person WHERE username='davidjohnson123'), 'Eating pizza in my backyard.', '08-01-2020', (SUBSTR('Eating pizza in my backyard.', 1, 12) || '...'));
+INSERT INTO Post
+VALUES(nextval('post_seq'), (SELECT person_id FROM Person WHERE username='charleswilliams123'), 'I love Miami beach YAY!!!', '02-01-2021', (SUBSTR('I love Miami beach YAY!!!', 1, 12) || '...'));
+INSERT INTO Post 
+VALUES(nextval('post_seq'), (SELECT person_id FROM Person WHERE username='bryanbrown123'), 'Check out my social media accounts.', '04-01-2020', (SUBSTR('Check out my social media accounts.', 1, 12) || '...'));
+INSERT INTO Post
+VALUES(nextval('post_seq'), (SELECT person_id FROM Person WHERE username='allansmith123'), 'Too much work and too little pay.', '04-01-2021', (SUBSTR('Too much work and too little pay.', 1, 12) || '...'));
+INSERT INTO Post
+VALUES(nextval('post_seq'), (SELECT person_id FROM Person WHERE username='bryanbrown123'), 'Take a look at these new pics.', '05-01-2020', (SUBSTR('Take a look at these new pics.', 1, 12) || '...'));
+INSERT INTO Post
+VALUES(nextval('post_seq'), (SELECT person_id FROM Person WHERE username='edisonmiller123'), 'Just arrived in the New York!', '10-01-2020', (SUBSTR('Just arrived in the New York!', 1, 12) || '...'));
+INSERT INTO Post
+VALUES(nextval('post_seq'), (SELECT person_id FROM Person WHERE username='davidjohnson123'), 'Happy Friday with Happy hours.', '07-01-2020', (SUBSTR('Happy Friday with Happy hours.', 1, 12) || '...'));
+INSERT INTO Post
+VALUES(nextval('post_seq'), (SELECT person_id FROM Person WHERE username='charleswilliams123'), 'I am having a Monday Syndrome.', '01-01-2021', (SUBSTR('I am having a Monday Syndrome.', 1, 12) || '...'));
 
-SELECT SUBSTR(<value or column>, <start>, <length>) FROM <table>;
+SELECT * from Post
 
+
+
+
+DELETE FROM Likes
+WHERE likes_id IN (1, 2, 3, 4, 5, 6, 7, 8);
+
+ALTER SEQUENCE likes_seq RESTART
+
+
+INSERT INTO Likes (likes_id, person_id, post_id, liked_on)
+VALUES(nextval('likes_seq'), (SELECT person_id FROM Person WHERE person_id = 3), (SELECT post_id FROM Post WHERE post_id = 8), '06-01-2021');
+INSERT INTO Likes (likes_id, person_id, post_id, liked_on)
+VALUES(nextval('likes_seq'), (SELECT person_id FROM Person WHERE person_id = 2), (SELECT post_id FROM Post WHERE post_id = 1), '06-02-2021');
+INSERT INTO Likes (likes_id, person_id, post_id, liked_on)
+VALUES(nextval('likes_seq'), (SELECT person_id FROM Person WHERE person_id = 1), (SELECT post_id FROM Post WHERE post_id = 4), '06-03-2021');
+INSERT INTO Likes (likes_id, person_id, post_id, liked_on)
+VALUES(nextval('likes_seq'), (SELECT person_id FROM Person WHERE person_id = 5), (SELECT post_id FROM Post WHERE post_id = 7), '06-04-2021');
+
+SELECT * from Likes
+
+
+
+--Get all posts details
+SELECT Person.username, content, created_on, Likes.liked_on
+FROM Post
+LEFT JOIN Person ON Post.person_id = Person.person_id
+LEFT JOIN Likes ON Post.post_id = Likes.post_id
+ORDER BY username;
+
+
+--Get all posts details
+SELECT ('The user: ' || Person.username || ' posted \"' || content || '\" on ' || created_on || ' and received ' || COUNT(Likes.liked_on) || ' likes!!!') AS posting_details
+FROM Post
+LEFT JOIN Person ON Post.person_id = Person.person_id
+LEFT JOIN Likes ON Post.post_id = Likes.post_id
+GROUP BY Person.username, content, created_on, Likes.liked_on
+ORDER BY username;
 
 
 Step 3 – Create Hardcoded Procedure
+
+--Create a stored procedure
+CREATE OR REPLACE PROCEDURE add_michelle_stella()
+AS
+$proc$
+      BEGIN
+        INSERT INTO Person
+        VALUES (nextval('person_seq'), 'Michelle', 'Stella', 'michellestella123');
+      END;
+$proc$ LANGUAGE plpgsql;
+
+CALL add_michelle_stella();
+
+SELECT * FROM Person;
+
+
