@@ -1,8 +1,9 @@
 Section Two – Triggers
 Step 7 – Single Table Validation Trigger
 
-
 all triggers are associated to an event that determines when its code is executed.
+specific event is defined as part of the overall definition of the trigger when it is created. 
+The database then automatically invokes the trigger when the defined event occurs. 
 
 
 create a trigger that prevents the customer balance from being negative. 
