@@ -112,6 +112,7 @@ GROUP BY Person.username, content, created_on, Likes.liked_on
 ORDER BY username;
 
 
+
 Step 3 – Create Hardcoded Procedure
 
 --Create a stored procedure
@@ -127,5 +128,63 @@ $proc$ LANGUAGE plpgsql;
 CALL add_michelle_stella();
 
 SELECT * FROM Person;
+
+
+
+
+Step 4 – Create Reusable Procedure
+
+--Create Reusable Procedure
+CREATE OR REPLACE PROCEDURE add_person(
+   first_name_arg IN VARCHAR,
+   last_name_arg IN VARCHAR,
+   username_arg IN VARCHAR)
+   LANGUAGE plpgsql
+AS
+$resuableproc$
+BEGIN
+   INSERT INTO Person(person_id, first_name, last_name, username)
+   VALUES(nextval('person_seq'), first_name_arg, last_name_arg, username_arg);
+END;
+$resuableproc$;
+
+CALL add_person('Frank', 'Davis', 'frankdavis123');
+
+SELECT * FROM Person;
+
+
+
+Step 5 – Create Deriving Procedure
+
+DELETE FROM Post
+WHERE post_id IN (9, 10, 11, 12, 13);
+
+ALTER SEQUENCE post_seq RESTART WITH 8;
+
+
+--Create Deriving Procedure 
+CREATE OR REPLACE PROCEDURE add_post(
+  p_content IN VARCHAR,
+  p_created_on IN DATE)
+  LANGUAGE plpgsql
+AS
+$$ DECLARE
+  v_summary VARCHAR;
+BEGIN
+   v_summary := SUBSTRING(p_content FROM 1 FOR 11) || '...';
+   INSERT INTO POST (post_id, person_id, content, created_on, summary)
+   VALUES(nextval('post_seq'), currval('person_seq'), p_content, p_created_on, v_summary);
+END;
+$$;
+
+CALL add_post('I just had 3 big slices pizza for dinner.', '06-02-2021');
+
+SELECT * FROM Post;
+
+
+
+Step 6 – Create Lookup Procedure
+
+
 
 
