@@ -338,7 +338,10 @@ UPDATE Post
 SET content = 'I am doing my homework right now.'
 WHERE post_id = 5;
 
+UPDATE Post
+SET content = 'Good night, I am going to sleep now.'
+WHERE post_id = 10;
+
 SELECT * FROM post_content_history;
 
-
-
+ 
