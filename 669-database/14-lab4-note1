@@ -1,4 +1,8 @@
-Section One – Stored Procedures
+Section One – Stored Procedures - something you can call later, a named block
+SQL is declarative, handles morstly by SQL, can invoke the procedural language in form of functions, constrained by relational model, called SQL
+
+procedural language is imperative(more specifically, procedural), handle by a seperate engine, can contain SQL CRUD, allows list nested tables etc, PL SQL
+
 Step 1 – Create Table Structure 
 
 A sequence is a database object capable of generating unique primary key values, and is the preferred mechanism for doing so. 
@@ -56,7 +60,8 @@ CREATE SEQUENCE customer_order_seq START WITH 1;
 
 Step 2 – Populate Tables
 
-// sequence’s current value
+// sequence’s current value - automatically generates the key
+external object - sequence - better performance
 
 --Insert first customer and order - it is important to only insert one at‐a‐time
  we can control the order of inserts, and we insert the referencing values immediately after the referenced values
@@ -64,8 +69,8 @@ INSERT INTO customer VALUES(nextval('customer_seq'),'John','Smith',0);
 INSERT INTO customer_order VALUES(nextval('customer_order_seq'),currval('customer_seq'), 506,CAST('18-DEC-2005' AS DATE));
 
 
-nextval(‘customer_seq’) is used to retrieve the next unique value for the primary key from customer_seq
-currval('customer_seq') to retrieve the current value of customer_seq.
+nextval(‘customer_seq’) is used to retrieve the next unique value for the primary key from customer_seq, next value
+currval('customer_seq') to retrieve the current value of customer_seq. most likely for foreign key, current value
  Getting the current value does not advance the sequence; rather, it retrieves the last unique value retrieved. 
 combination of nextval and currval 
  customer_order_id primary key value is retrieved with one sequence
@@ -126,7 +131,7 @@ Code: Creating add_customer_harry Procedure
 
 CREATE OR REPLACE PROCEDURE ADD_CUSTOMER_HARRY()
 AS
-$proc$
+$proc$ //start a string iterale and give it a name, can be anything
       BEGIN
         INSERT INTO Customer (customer_id,customer_first,customer_last, customer_total)
         VALUES (nextval('customer_seq'), 'Harry', 'Joker', 0);
