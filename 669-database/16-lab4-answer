@@ -287,5 +287,58 @@ VALUES(nextval('likes_seq'), 4, 1, '06-04-2021');
 SELECT * FROM Likes;
 
 
+DROP TRIGGER check_liked_trg on LIKES;
+
+DELETE FROM Likes
+WHERE likes_id IN (16, 17, 18, 19, 20);
+
+ALTER SEQUENCE likes_seq RESTART WITH 6;
+
+
 Step 9 – History Trigger
+
+--Creating Table
+
+CREATE TABLE post_content_history  (
+post_id DECIMAL(12) NOT NULL,
+old_post VARCHAR(255) NOT NULL,
+new_post VARCHAR(255) NOT NULL,
+change_date DATE NOT NULL,
+summary VARCHAR(15) NOT NULL,
+FOREIGN KEY (post_id) REFERENCES Post(post_id));
+
+DROP TABLE post_content_history;
+
+
+--History Trigger 
+CREATE OR REPLACE FUNCTION content_history_func()
+RETURNS TRIGGER LANGUAGE plpgsql
+AS $$
+BEGIN
+    IF OLD.content <> NEW.content THEN
+        INSERT INTO post_content_history (post_id, old_post, new_post, change_date, summary)
+        VALUES(New.post_id, OLD.content, NEW.content, CURRENT_DATE, SUBSTR(NEW.content, 1, 11) || '...');
+END IF;
+    RETURN NEW;
+END;
+$$;
+
+CREATE TRIGGER content_history_trg
+AFTER INSERT OR UPDATE ON Post
+FOR EACH ROW
+EXECUTE PROCEDURE content_history_func();
+
+
+DROP TRIGGER content_history_trg ON Post;
+
+DROP TRIGGER valid_summary ON Post;
+
+
+UPDATE Post
+SET content = 'I am doing my homework right now.'
+WHERE post_id = 5;
+
+SELECT * FROM post_content_history;
+
+
 
