@@ -164,6 +164,7 @@ ALTER SEQUENCE post_seq RESTART WITH 8;
 
 --Create Deriving Procedure 
 CREATE OR REPLACE PROCEDURE add_post(
+  p_person_is IN DECIMAL
   p_content IN VARCHAR,
   p_created_on IN DATE)
   LANGUAGE plpgsql
@@ -173,7 +174,7 @@ $$ DECLARE
 BEGIN
    v_summary := SUBSTRING(p_content FROM 1 FOR 11) || '...';
    INSERT INTO POST (post_id, person_id, content, created_on, summary)
-   VALUES(nextval('post_seq'), currval('person_seq'), p_content, p_created_on, v_summary);
+   VALUES(nextval('post_seq'), p_person_id, p_content, p_created_on, v_summary);
 END;
 $$;
 
