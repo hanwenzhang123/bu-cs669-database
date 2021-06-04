@@ -247,8 +247,44 @@ VALUES(nextval('post_seq'),
 	   'Good night world, I am going to sleep soon.', 
 	   '01-01-2021', 
 	   (SUBSTR(new.content, 1, 11) || '...'));
-         
+
+
 Step 8 – Cross-Table Validation Trigger
+
+--Cross-Table Validation Trigger
+CREATE OR REPLACE FUNCTION block_like_func()
+RETURNS TRIGGER LANGUAGE plpgsql
+AS $$
+DECLARE 
+    v_created_on DATE;
+
+BEGIN
+   SELECT Post.created_on
+   INTO v_created_on
+   FROM Post
+   JOIN Likes ON Post.post_id = Likes.post_id;
+
+   IF NEW.liked_on < v_created_on THEN
+     RAISE EXCEPTION USING MESSAGE = 'You can only like a picture if the date is after the post created.',
+     ERRCODE = 22000;
+END IF;
+   RETURN NEW;
+END;
+$$;
+
+CREATE TRIGGER check_liked_trg
+BEFORE UPDATE OR INSERT ON LIKES
+FOR EACH ROW
+EXECUTE PROCEDURE block_like_func();
+
+
+INSERT INTO Likes
+VALUES(nextval('likes_seq'), 6, 2, '06-04-2018');
+
+INSERT INTO Likes
+VALUES(nextval('likes_seq'), 4, 1, '06-04-2021');
+
+SELECT * FROM Likes;
 
 
 Step 9 – History Trigger
