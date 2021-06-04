@@ -1,4 +1,4 @@
-Section Two – Triggers
+Section Two – Triggers  - database automatically calls it
 Step 7 – Single Table Validation Trigger
 
 all triggers are associated to an event that determines when its code is executed.
@@ -96,5 +96,25 @@ EXECUTE PROCEDURE item_history_func();
 
 Section Three – Concurrency
 
+client database - connects to each other
+a session in between, transaction between it
+
+Atomicity - all or nothing, all transaction or none, no middle ground
+consistency - has to be consistent, all the constraint must be satisfied, data is consistent
+isolation - change made by incomplete, uncommited
+durability - effects of a comitted transaction are permanent and must not be lost because of later failure of the platform
+serializability - each transaction the database behaves as if this were the only transaction  A->B->C
+
+
+what if it happens?
+
+A lost update is when results from one transaction are overwritten by a simultaneously executing transaction
+
 Step 10 – Issues with No Concurrency Control
+
+
+
 Step 11 – Issues with Locking and Multiversioning
+
+
+
