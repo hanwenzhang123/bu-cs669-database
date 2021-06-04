@@ -1,6 +1,6 @@
 Section One – Stored Procedures
 Step 1 – Create Table Structure 
-
+ 
 CREATE TABLE Person(
 person_id DECIMAL(12) NOT NULL,
 first_name VARCHAR(32) NOT NULL,
