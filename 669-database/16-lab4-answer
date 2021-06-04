@@ -178,7 +178,7 @@ BEGIN
 END;
 $$;
 
-CALL add_post('I just had 3 big slices pizza for dinner.', '06-02-2021');
+CALL add_post(4, 'I just had 3 big slices pizza for dinner.', '06-02-2021');
 
 SELECT * FROM Post;
 
