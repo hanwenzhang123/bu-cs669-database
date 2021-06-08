@@ -318,7 +318,7 @@ JOIN  Sells ON Sells.store_location_id = Store_location.store_location_id
 JOIN  Product ON Product.product_id = Sells.product_id
 JOIN  Alternate_name ON Alternate_name.product_id = Product.product_id
 WHERE EXISTS (SELECT Universal.product_id FROM (
-				        SELECT Sells.product_id, COUNT(Sells.product_id) AS Counting
+				        SELECT product_id, COUNT(product_id) AS Counting
 				        FROM Sells
 				        GROUP BY Sells.product_id
 		     			) Universal
