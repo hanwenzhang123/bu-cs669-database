@@ -200,7 +200,30 @@ SELECT to_char(price_in_us_dollars *
        (SELECT us_dollars_to_currency_ratio
         FROM   Currency
         WHERE  currency_name = 'Britsh Pound'),
-		'FM£999D99') AS price_in_pounds
+		'FM£999D00') AS price_in_pounds
 FROM   Product
 WHERE  product_name = 'Digital Thermometer';
 
+
+SELECT us_dollars_to_currency_ratio
+FROM   Currency
+WHERE  currency_name = 'Britsh Pound'
+
+
+SELECT product_name,
+       to_char(price_in_us_dollars *
+       (SELECT us_dollars_to_currency_ratio
+        FROM   Currency
+        WHERE  currency_name = 'Euro'),
+		'FM€999D00') AS price_in_euros
+FROM   Product
+WHERE  price_in_us_dollars *
+      (SELECT us_dollars_to_currency_ratio
+       FROM   Currency
+       WHERE  currency_name = 'Euro') < 26
+	   OR 
+	   price_in_us_dollars *
+	   (SELECT us_dollars_to_currency_ratio
+       FROM   Currency
+	   WHERE currency_name = 'Euro') > 299;
+	   
