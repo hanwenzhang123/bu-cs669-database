@@ -28,6 +28,14 @@ WHERE  product_name = 'Cashmere Sweater'
 
 Placing a subquery in the column list of a SELECT statement gives us the ability to directly manipulate values from every row returned in the outer query. 
 
+The principle is that the result of a subquery placed in the column list is used for every row returned from the outer query.
+
+uncorrelated subquery:
+which is subquery does not reference a table or value in the outer query, and that its results can be retrieved with or without the existence of the outer query
+An uncorrelated subquery can always be extracted and executed as a query in its own right.
+The SQL engine executes an uncorrelated subquery independently of the outer query, before it needs the subquery’s results.
+
+
 FM€99D99
 The “FM” in the format string instructs the SQL engine to display only as many digits are as necessary
 FM suppresses padding so the symbol used is next to the numeric value and D is used as the decimal point and pulled from the local setting.
