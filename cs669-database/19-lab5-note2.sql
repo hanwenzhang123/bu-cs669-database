@@ -239,17 +239,10 @@ coupled with the EXISTS keyword, means that if the current row in the outer quer
 
 Correlating the subquery involves changing it from an independent (uncorrelated) subquery to one that references at least one table introduced in the outer query
 
-you cannot use group by nor count in the correlated subquery makes using this method 
+
 
 Step 7 – Using View in Query
+A view is a named query that can be used as if it were a table. 
 
 
 
-
-Section Two – Distributed Databases
-Step 8 – Simulating Horizontal Fragmentation
-
-
-
-
-Step 9 – Simulating Vertical Fragmentation
