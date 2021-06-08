@@ -85,3 +85,50 @@ WHERE  price_in_us_dollars *
 
  
 Step 4 – Using the IN Clause with a Subquery
+deciding how many values to retrieve in the subquery
+we decide the maximum number of rows and columns it may retrieve. 
+If a subquery retrieves one column, then we have the option to retrieve a single value by ensuring the subquery always retrieves exactly one row, and we have the option to retrieve a list of values by allowing it to retrieve as many rows as are needed. 
+
+
+SELECT last_name FROM Person WHERE person_id = 5  --a single primary key value
+
+SELECT last_name FROM Person WHERE weight_in_pounds < 130 --retrieve a list of values
+
+“WHERE X IN (5, 10, 20)”. The IN operator tests whether a single value is found in a list of values.
+If X is 5 or 10 or 20, then “X IN (5, 10, 20)” is true; otherwise, it is false.
+
+A good way to craft a query to address a more complex use case is to create one independent query for each distinct part, then put them together.
+
+ 
+Code: Store Locations Query
+SELECT Store_location.store_location_id, Store_location.store_name
+FROM   Store_location
+JOIN   Offers ON Offers.store_location_id = Store_location.store_location_id
+GROUP BY Store_location.store_location_id, Store_location.store_name
+HAVING   COUNT(Offers.purchase_delivery_offering_id) > 1  --limits the results returned to those stores with more than one purchase and delivery option.
+
+ 
+Code: Products and Prices Query
+SELECT Store_location.store_name, Product.product_name, Product.price_in_us_dollars
+FROM  Store_location
+JOIN  Sells ON Sells.store_location_id = Store_location.store_location_id
+JOIN  Product ON Product.product_id = Sells.product_id
+
+
+ 
+Code: Full Query
+SELECT Store_location.store_name,
+       Product.product_name,
+       to_char(Product.price_in_us_dollars, 'FML999.00') AS US_Price
+FROM  Store_location
+JOIN  Sells ON Sells.store_location_id = Store_location.store_location_id
+JOIN  Product ON Product.product_id = Sells.product_id
+WHERE  Store_location.store_location_id IN  --sets up the condition that the store_location_id must be in the list of values
+       (SELECT   Store_location.store_location_id
+       FROM   Store_location
+       JOIN Offers
+       ON Offers.store_location_id = Store_location.store_location_id
+       GROUP BY Store_location.store_location_id
+       HAVING   COUNT(Offers.purchase_delivery_offering_id) > 1);
+
+
