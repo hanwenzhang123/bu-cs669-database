@@ -10,6 +10,7 @@ CREATE TABLE Currency (
 currency_id DECIMAL(12) NOT NULL PRIMARY KEY,
 currency_name VARCHAR(255) NOT NULL,
 us_dollars_to_currency_ratio DECIMAL(12,2) NOT NULL);
+
 CREATE TABLE Store_location (
 store_location_id DECIMAL(12) NOT NULL PRIMARY KEY,
 store_name VARCHAR(255) NOT NULL,
@@ -228,6 +229,36 @@ WHERE  price_in_us_dollars *
 	   WHERE currency_name = 'Euro') > 299;
 
 
+SELECT DISTINCT Product.product_name,
+       Alternate_name.name AS alternate_name,
+       to_char(Product.price_in_us_dollars, 'FM$999.00') AS US_Price
+FROM  Store_location
+JOIN  Sells ON Sells.store_location_id = Store_location.store_location_id
+JOIN  Product ON Product.product_id = Sells.product_id
+JOIN  Alternate_name ON Alternate_name.product_id = Product.product_id
+WHERE  Product.product_id IN 
+      (SELECT Product.product_id
+       FROM Product
+       JOIN Sells ON Sells.product_id = Product.product_id
+       GROUP BY Product.product_id
+       HAVING COUNT(Sells.product_id) = (SELECT COUNT(store_location_id) FROM Store_location)); 
+
+       
+       
+SELECT DISTINCT Product.product_name,
+	Alternate_name.name AS alternate_name,
+       to_char(Product.price_in_us_dollars, 'FM$999.00') AS US_Price
+FROM  (SELECT Product.product_id
+       FROM Product
+       JOIN Sells ON Sells.product_id = Product.product_id
+       GROUP BY Product.product_id
+       HAVING COUNT(Sells.product_id) = (SELECT COUNT(store_location_id) FROM Store_location)) information
+JOIN  Sells ON Sells.product_id = information.product_id
+JOIN  Product ON Product.product_id = Sells.product_id
+JOIN  Alternate_name ON Alternate_name.product_id = Product.product_id;
+       
+
+
 SELECT Store_location.store_name,
        Product.product_name,
 	   Alternate_name.name AS alternate_name,
@@ -236,13 +267,27 @@ FROM  Store_location
 JOIN  Sells ON Sells.store_location_id = Store_location.store_location_id
 JOIN  Product ON Product.product_id = Sells.product_id
 JOIN  Alternate_name ON Alternate_name.product_id = Product.product_id
-
 WHERE  Product.product_id IN 
       (SELECT Product.product_id
        FROM Product
-       JOIN Sells  ON Sells.product_id = Product.product_id
+       JOIN Sells ON Sells.product_id = Product.product_id
        GROUP BY Product.product_id
-       HAVING COUNT(Sells.product_id) = COUNT(store_location_id) FROM Store_location);
+       HAVING COUNT(Sells.product_id) = (SELECT COUNT(store_location_id) FROM Store_location)); 
 
+
+
+SELECT Store_location.store_name,
+	Product.product_name,
+	Alternate_name.name AS alternate_name,
+       to_char(Product.price_in_us_dollars, 'FM$999.00') AS US_Price
+FROM  (SELECT Product.product_id
+       FROM Product
+       JOIN Sells ON Sells.product_id = Product.product_id
+       GROUP BY Product.product_id
+       HAVING COUNT(Sells.product_id) = (SELECT COUNT(store_location_id) FROM Store_location)) information
+JOIN  Sells ON Sells.product_id = information.product_id
+JOIN  Store_location ON store_location.store_location_id = Sells.store_location_id
+JOIN  Product ON Product.product_id = Sells.product_id
+JOIN  Alternate_name ON Alternate_name.product_id = Product.product_id;
 
 
