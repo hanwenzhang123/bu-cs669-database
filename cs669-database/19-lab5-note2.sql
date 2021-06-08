@@ -51,3 +51,37 @@ WHERE  product_name = 'Cashmere Sweater'
 
 
 Step 3 – Subquery in WHERE Clause
+The new skill you need to address this step is to filter rows based off the results of the subquery. 
+ 
+  
+Code: All Products’ Prices in Pesos
+SELECT product_name,
+       price_in_us_dollars *
+       (SELECT us_dollars_to_currency_ratio
+        FROM   Currency
+        WHERE  currency_name = 'Mexican Peso') AS price_in_pesos
+FROM Product
+ 
+ 
+ --more than one subquery can be embedded in a single query
+  the first subquery is used to retrieve the price in Mexican Pesos
+  the second subquery is to restrict the products retrieved. 
+  Each subquery has a useful purpose, and the use of one does not preclude the use of another.
+ 
+Code: Products Less Than Mex$2,750
+SELECT product_name,
+       price_in_us_dollars *
+      (SELECT us_dollars_to_currency_ratio
+       FROM Currency
+       WHERE  currency_name = 'Mexican Peso') AS price_in_pesos
+--That subquery is executed before its result must be used in the WHERE clause, and the subquery’s result takes the place of a literal value. 
+FROM   Product
+WHERE  price_in_us_dollars *
+      (SELECT us_dollars_to_currency_ratio
+       FROM   Currency
+       WHERE  currency_name = 'Mexican Peso') < 2750
+--contain the same subquery used but restrict (filter) rows in the result, because it is located in the WHERE clause.
+--products whose prices are not less than Mex$2,750 are excluded, greater than or equal to Mex$2,750 are excluded. 
+
+ 
+Step 4 – Using the IN Clause with a Subquery
