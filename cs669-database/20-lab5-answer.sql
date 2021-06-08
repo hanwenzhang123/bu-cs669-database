@@ -244,7 +244,6 @@ WHERE  Product.product_id IN
        HAVING COUNT(Sells.product_id) = (SELECT COUNT(store_location_id) FROM Store_location)); 
 
        
-       
 SELECT DISTINCT Product.product_name,
 	Alternate_name.name AS alternate_name,
        to_char(Product.price_in_us_dollars, 'FM$999.00') AS US_Price
@@ -289,5 +288,30 @@ JOIN  Store_location ON store_location.store_location_id = Sells.store_location_
 JOIN  Product ON Product.product_id = Sells.product_id
 JOIN  Alternate_name ON Alternate_name.product_id = Product.product_id
 ORDER BY store_name, product_name, alternate_name; 
+
+
+
+SELECT Store_location.store_name,
+       Product.product_name,
+	   Alternate_name.name AS alternate_name,
+       to_char(Product.price_in_us_dollars, 'FM$999.00') AS US_Price
+FROM  Store_location
+JOIN  Sells ON Sells.store_location_id = Store_location.store_location_id
+JOIN  Product ON Product.product_id = Sells.product_id
+JOIN  Alternate_name ON Alternate_name.product_id = Product.product_id
+WHERE EXISTS (SELECT Product.product_id
+       		 FROM Sells Universal_sells
+      		 JOIN Product ON Universal_sells.product_id = Product.product_id
+			 JOIN Store_location ON Universal_sells.store_location_id = Store_location.store_location_id
+			 WHERE Store_location.store_location_id = Universal_sells.store_location_id)
+ORDER BY store_name, product_name, alternate_name
+
+
+
+
+
+
+
+
 
 
