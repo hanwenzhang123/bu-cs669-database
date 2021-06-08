@@ -258,7 +258,6 @@ JOIN  Product ON Product.product_id = Sells.product_id
 JOIN  Alternate_name ON Alternate_name.product_id = Product.product_id;
        
 
-
 SELECT Store_location.store_name,
        Product.product_name,
 	   Alternate_name.name AS alternate_name,
@@ -272,8 +271,8 @@ WHERE  Product.product_id IN
        FROM Product
        JOIN Sells ON Sells.product_id = Product.product_id
        GROUP BY Product.product_id
-       HAVING COUNT(Sells.product_id) = (SELECT COUNT(store_location_id) FROM Store_location)); 
-
+       HAVING COUNT(Sells.product_id) = (SELECT COUNT(store_location_id) FROM Store_location))
+       ORDER BY store_name, product_name, alternate_name; 
 
 
 SELECT Store_location.store_name,
@@ -288,6 +287,7 @@ FROM  (SELECT Product.product_id
 JOIN  Sells ON Sells.product_id = information.product_id
 JOIN  Store_location ON store_location.store_location_id = Sells.store_location_id
 JOIN  Product ON Product.product_id = Sells.product_id
-JOIN  Alternate_name ON Alternate_name.product_id = Product.product_id;
+JOIN  Alternate_name ON Alternate_name.product_id = Product.product_id
+ORDER BY store_name, product_name, alternate_name; 
 
 
