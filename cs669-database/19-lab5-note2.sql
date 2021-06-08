@@ -173,5 +173,83 @@ JOIN  Product ON Product.product_id = Sells.product_id;
 filtering has been achieved in the FROM clause rather than the WHERE clause.
        we can successfully filter rows by using a subquery in the FROM clause
        
-       
-       
+
+
+Step 6 – Correlated Subquery
+
+Code: Products and Prices Query
+SELECT Store_location.store_name, Product.product_name, Product.price_in_us_dollars
+FROM  Store_location
+JOIN  Sells ON Sells.store_location_id = Store_location.store_location_id
+JOIN  Product ON Product.product_id = Sells.product_id
+
+ 
+Code: Locations Selling Cashmere Sweaters
+SELECT Store_location.store_name, Product.product_name
+FROM  Store_location
+JOIN  Sells ON Sells.store_location_id = Store_location.store_location_id
+JOIN  Product ON Product.product_id = Sells.product_id
+              AND product.product_name = 'Cashmere Sweater'
+              
+              
+  
+The EXISTS clause is useful to address use cases such as this that test for the existence of a certain item. 
+the EXISTS clause only works with a subquery
+An EXISTS clause is a Boolean expression that returns only true and false, true if the subquery returns any rows at all, and false if the subquery returns no rows. 
+EXISTS only tests the existence of at least one row - “Is any row retrieved from this subquery?”
+  
+  
+A correlated subquery references at least one table from the outer query, which means that conceptually, the subquery is not an independent query.
+we cannot execute correlated subqueries on their own; correlated subqueries only make sense in the context of the outer query into which they are embedded
+correlated subqueries are executed once for each row in the outer query and therefore retrieve one result set for each row in the outer query. 
+the results of an uncorrelated subquery are fixed, and the results of a correlated subquery are relative to each row in the outer query. 
+
+EXISTS is typically coupled with a correlated subquery to achieve meaningful results.
+
+Code: Initial Combination Attempt -- incorrect, need correlated subquery
+SELECT Store_location.store_name, 
+       Product.product_name, 
+       Product.price_in_us_dollars
+FROM  Store_location
+JOIN  Sells ON Sells.store_location_id = Store_location.store_location_id
+JOIN  Product ON Product.product_id = Sells.product_id
+WHERE EXISTS (SELECT Store_location.store_name, Product.product_name
+              FROM  Store_location
+              JOIN  Sells ON Sells.store_location_id = Store_location.store_location_id
+              JOIN  Product ON Product.product_id = Sells.product_id
+                            AND product.product_name = 'Cashmere Sweater')
+Code: Correlated Subquery
+SELECT  Store_location.store_name,
+        Product.product_name,
+        Product.price_in_us_dollars
+FROM   Store_location
+JOIN   Sells ON Sells.store_location_id = Store_location.store_location_id
+JOIN   Product ON Product.product_id = Sells.product_id
+WHERE  EXISTS (SELECT Cashmere_location.store_location_id, Cashmere_location.store_name
+               FROM   Store_location Cashmere_location   --alias, identifier
+               JOIN   Sells ON Sells.store_location_id =  Cashmere_location.store_location_id
+               JOIN   Product ON Product.product_id = Sells.product_id
+                              AND Product.product_name = 'Cashmere Sweater'
+               WHERE  Cashmere_location.store_location_id = Store_location.store_location_id) --this line that correlates the subquery with the outer query!
+
+Notice that the ID of Cashmere_location must equal the ID of Store_location, and it is this equality that forces the subquery into correlation. 
+“Retrieve the store location found in the current row of the outer query only if that store location sells Cashmere sweaters”
+
+coupled with the EXISTS keyword, means that if the current row in the outer query does not contain a store location that sells Cashmere sweaters, it is excluded from the result set.
+
+Correlating the subquery involves changing it from an independent (uncorrelated) subquery to one that references at least one table introduced in the outer query
+
+you cannot use group by nor count in the correlated subquery makes using this method 
+
+Step 7 – Using View in Query
+
+
+
+
+Section Two – Distributed Databases
+Step 8 – Simulating Horizontal Fragmentation
+
+
+
+
+Step 9 – Simulating Vertical Fragmentation
