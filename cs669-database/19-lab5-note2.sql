@@ -132,3 +132,46 @@ WHERE  Store_location.store_location_id IN  --sets up the condition that the sto
        HAVING   COUNT(Offers.purchase_delivery_offering_id) > 1);
 
 
+
+Step 5 – Subquery in FROM Clause
+no restrictions on the number of rows or columns when tabular results are expected, since the results are by definition tabular. 
+the FROM clause always expects tabular elements, so a subquery can be used in the FROM clause without regard to the number of columns and rows it retrieves. 
+
+
+Full Query with WHERE Clause Subquery
+
+SELECT Store_location.store_name,
+       Product.product_name,
+       to_char(Product.price_in_us_dollars, 'FML999.00') AS US_Price
+FROM  Store_location
+JOIN  Sells ON Sells.store_location_id = Store_location.store_location_id
+JOIN  Product ON Product.product_id = Sells.product_id
+WHERE  Store_location.store_location_id IN  --sets up the condition that the store_location_id must be in the list of values
+       (SELECT   Store_location.store_location_id
+       FROM   Store_location
+       JOIN Offers
+       ON Offers.store_location_id = Store_location.store_location_id
+       GROUP BY Store_location.store_location_id
+       HAVING   COUNT(Offers.purchase_delivery_offering_id) > 1);
+
+
+Code: Subquery in FROM Clause
+SELECT Store_location.store_name,
+       Product.product_name,
+       to_char(Product.price_in_us_dollars, 'FML999.00') AS US_Price
+FROM   (SELECT   Store_location.store_location_id,
+                 Store_location.store_name
+       FROM   Store_location
+       JOIN Offers
+            ON Offers.store_location_id = Store_location.store_location_id
+       GROUP BY Store_location.store_location_id, Store_location.store_name
+       HAVING   COUNT(Offers.purchase_delivery_offering_id) > 1) locations --an alias which provides a name for the subquery’s results
+JOIN  Sells ON Sells.store_location_id = Store_location.store_location_id
+JOIN  Product ON Product.product_id = Sells.product_id;
+
+
+filtering has been achieved in the FROM clause rather than the WHERE clause.
+       we can successfully filter rows by using a subquery in the FROM clause
+       
+       
+       
