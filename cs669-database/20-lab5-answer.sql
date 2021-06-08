@@ -226,4 +226,23 @@ WHERE  price_in_us_dollars *
 	   (SELECT us_dollars_to_currency_ratio
        FROM   Currency
 	   WHERE currency_name = 'Euro') > 299;
-	   
+
+
+SELECT Store_location.store_name,
+       Product.product_name,
+	   Alternate_name.name AS alternate_name,
+       to_char(Product.price_in_us_dollars, 'FM$999.00') AS US_Price
+FROM  Store_location
+JOIN  Sells ON Sells.store_location_id = Store_location.store_location_id
+JOIN  Product ON Product.product_id = Sells.product_id
+JOIN  Alternate_name ON Alternate_name.product_id = Product.product_id
+
+WHERE  Product.product_id IN 
+      (SELECT Product.product_id
+       FROM Product
+       JOIN Sells  ON Sells.product_id = Product.product_id
+       GROUP BY Product.product_id
+       HAVING COUNT(Sells.product_id) = COUNT(store_location_id) FROM Store_location);
+
+
+
