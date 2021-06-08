@@ -228,7 +228,7 @@ WHERE  price_in_us_dollars *
        FROM   Currency
 	   WHERE currency_name = 'Euro') > 299;
 
-
+--Short List
 SELECT DISTINCT Product.product_name,
        Alternate_name.name AS alternate_name,
        to_char(Product.price_in_us_dollars, 'FM$999.00') AS US_Price
@@ -257,6 +257,7 @@ JOIN  Product ON Product.product_id = Sells.product_id
 JOIN  Alternate_name ON Alternate_name.product_id = Product.product_id;
        
 
+--Long List
 SELECT Store_location.store_name,
        Product.product_name,
 	   Alternate_name.name AS alternate_name,
@@ -290,7 +291,7 @@ JOIN  Alternate_name ON Alternate_name.product_id = Product.product_id
 ORDER BY store_name, product_name, alternate_name; 
 
 
-
+--All Product
 SELECT Store_location.store_name,
        Product.product_name,
 	   Alternate_name.name AS alternate_name,
@@ -307,10 +308,23 @@ WHERE EXISTS (SELECT Product.product_id
 ORDER BY store_name, product_name, alternate_name
 
 
-
-
-
-
+--Selected Product
+SELECT Store_location.store_name,
+       Product.product_name,
+	   Alternate_name.name AS alternate_name,
+       to_char(Product.price_in_us_dollars, 'FM$999.00') AS US_Price
+FROM  Store_location
+JOIN  Sells ON Sells.store_location_id = Store_location.store_location_id
+JOIN  Product ON Product.product_id = Sells.product_id
+JOIN  Alternate_name ON Alternate_name.product_id = Product.product_id
+WHERE EXISTS (SELECT Universal.product_id FROM (
+				        SELECT Sells.product_id, COUNT(Sells.product_id) AS Counting
+				        FROM Sells
+				        GROUP BY Sells.product_id
+		     			) Universal
+		WHERE Counting = (SELECT COUNT(store_location_id) FROM Store_location)
+			AND Universal.product_id = Product.product_id)
+ORDER BY store_name, product_name, alternate_name
 
 
 
