@@ -115,4 +115,6 @@ FROM Profile;
 SELECT * FROM username_all;
 
 
-
+SELECT * FROM name_birthday
+UNION ALL
+SELECT * FROM username_pin;
