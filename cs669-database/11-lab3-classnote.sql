@@ -3,7 +3,7 @@ data aggregation - reports, grouping, summary, data analysis, etc
 a single value across all rows or across groups of rows
 
 
-order of WHERE
+Order of WHERE
 - after the SELECT and FROM because they run first
 
 
