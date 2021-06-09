@@ -244,5 +244,61 @@ Correlating the subquery involves changing it from an independent (uncorrelated)
 Step 7 – Using View in Query
 A view is a named query that can be used as if it were a table. 
 
+If many different queries need the same subquery, it is wise to define the subquery as a view. 
+
+
+ 
+Code: Simple Person Table
+CREATE TABLE Person (
+first_name VARCHAR(64) NOT NULL,
+last_name VARCHAR(64) NOT NULL,
+height_inches DECIMAL(3) NOT NULL);
+INSERT INTO Person VALUES('Bob', 'Smith', 72);
+INSERT INTO Person VALUES('Jacinto', 'Erbin', 62);
+INSERT INTO Person VALUES('Mari', 'Kevin', 64);
+INSERT INTO Person VALUES('Ivana', 'Amaltheia', 74);
+INSERT INTO Person VALUES('Larissa', 'Fay', 66);
+
+ 
+Code: Oracle and Postgres View Syntax
+CREATE OR REPLACE VIEW Person_detail AS
+SELECT first_name,
+       last_name,
+       CAST(height_inches/12.0 AS DECIMAL(12,2)) AS height_feet
+FROM Person;
+
+
+ 
+Code: Original Query with Subquery
+SELECT locations.store_name,
+       Product.product_name,
+       Product.price_in_us_dollars
+FROM   (SELECT   Store_location.store_location_id,
+                 Store_location.store_name
+        FROM     Store_location
+        JOIN     Offers
+                 ON Offers.store_location_id = Store_location.store_location_id
+        GROUP BY Store_location.store_location_id, Store_location.store_name
+        HAVING   COUNT(Offers.purchase_delivery_offering_id) > 1) locations
+JOIN   Sells ON Sells.store_location_id = locations.store_location_id
+JOIN   Product ON Product.product_id = Sells.product_id;
+
+
+ 
+Code: New Query with View
+CREATE OR REPLACE VIEW Many_delivery_locations AS
+SELECT   Store_location.store_location_id,
+                 Store_location.store_name
+        FROM     Store_location
+        JOIN     Offers
+                 ON Offers.store_location_id = Store_location.store_location_id
+        GROUP BY Store_location.store_location_id, Store_location.store_name
+        HAVING   COUNT(Offers.purchase_delivery_offering_id) > 1;
+SELECT many_delivery_locations.store_name,
+       Product.product_name,
+       Product.price_in_us_dollars
+FROM   Many_delivery_locations
+JOIN   Sells ON Sells.store_location_id = many_delivery_locations.store_location_id
+JOIN   Product ON Product.product_id = Sells.product_id;
 
 
