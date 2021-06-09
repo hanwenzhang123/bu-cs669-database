@@ -14,7 +14,7 @@ CREATE DATABASE database_name;
 Saving Your Data:
 COMMIT;
 
-  
+   
 An instance is a collection of SQL Server databases run by a single SQL Server service
 
 MSSQL - sqlcmd for command-line window
