@@ -87,34 +87,24 @@ FROM Profile;
 SELECT * FROM fullname_birthday;
 
 
+DROP VIEW name_birthday;
+DROP VIEW username_pin;
+
 CREATE OR REPLACE VIEW name_birthday AS
-SELECT first_name, last_name, birthday
+SELECT person_id, first_name, last_name, birthday
 FROM Profile;
 
 SELECT * FROM name_birthday;
 
 
 CREATE OR REPLACE VIEW username_pin AS
-SELECT username, four_digit_pin
+SELECT person_id, username, four_digit_pin
 FROM Profile;
 
 SELECT * FROM username_pin;
-
-
-CREATE OR REPLACE VIEW fullname AS
-SELECT first_name, last_name
-FROM Profile;
-
-SELECT * FROM fullname;
-
-
-CREATE OR REPLACE VIEW username_all AS
-SELECT first_name, username
-FROM Profile;
-
-SELECT * FROM username_all;
 
 
 SELECT * FROM name_birthday
-UNION ALL
-SELECT * FROM username_pin;
+JOIN username_pin ON name_birthday.person_id = username_pin.person_id;
+
+  
