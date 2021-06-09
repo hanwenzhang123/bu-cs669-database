@@ -1,4 +1,4 @@
-Section One – Subqueries
+Section One – Subqueries 
 Step 2 – Subquery in Column List
 
 two queries independently gives us the results we want, but forces us to manually hardcode one value (may change overtime) into another. 
