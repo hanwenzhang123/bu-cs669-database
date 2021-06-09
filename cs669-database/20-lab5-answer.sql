@@ -327,5 +327,5 @@ WHERE EXISTS (SELECT Universal.product_id FROM (
 ORDER BY store_name, product_name, alternate_name
 
 
-
-
+--Query with View
+CREATE OR REPLACE VIEW Many_delivery_locations AS
