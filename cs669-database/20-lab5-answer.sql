@@ -328,4 +328,21 @@ ORDER BY store_name, product_name, alternate_name
 
 
 --Query with View
-CREATE OR REPLACE VIEW Many_delivery_locations AS
+CREATE OR REPLACE VIEW universal_products AS
+SELECT Product.product_id
+       FROM Product
+       JOIN Sells ON Sells.product_id = Product.product_id
+       GROUP BY Product.product_id
+       HAVING COUNT(Sells.product_id) = (SELECT COUNT(store_location_id) FROM Store_location)
+	   
+SELECT Store_location.store_name,
+	   Product.product_name,
+	   Alternate_name.name AS alternate_name,
+       to_char(Product.price_in_us_dollars, 'FM$999.00') AS US_Price
+FROM   universal_products
+JOIN   Sells ON Sells.product_id = universal_products.product_id
+JOIN   Store_location ON store_location.store_location_id = Sells.store_location_id
+JOIN   Product ON Product.product_id = Sells.product_id
+JOIN   Alternate_name ON Alternate_name.product_id = Product.product_id
+ORDER BY store_name, product_name, alternate_name; 
+  
