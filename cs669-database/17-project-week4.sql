@@ -24,7 +24,6 @@ business_website VARCHAR(255) NOT NULL
 CREATE TABLE Advertisement(
 ad_id DECIMAL(12) NOT NULL,
 business_id DECIMAL(12) NOT NULL,
-user_id DECIMAL(12) NOT NULL,
 requested_on DATE NOT NULL,
 advertising_type VARCHAR(24) NOT NULL,
 advertising_plan TEXT NOT NULL,
@@ -118,3 +117,4 @@ CREATE SEQUENCE private_seq START WITH 1;
 CREATE SEQUENCE entry_seq START WITH 1;
 CREATE SEQUENCE journal_seq START WITH 1;
 CREATE SEQUENCE rating_seq START WITH 1;
+   
