@@ -61,6 +61,13 @@ PRIMARY KEY (ad_id),
 FOREIGN KEY (ad_id) REFERENCES Advertisement
 );
 
+CREATE TABLE Transaction(
+ad_id DECIMAL(12) NOT NULL,
+user_id DECIMAL(12) NOT NULL,
+FOREIGN KEY (ad_id) REFERENCES Advertisement,
+FOREIGN KEY (user_id) REFERENCES Users
+);
+
 CREATE TABLE Public(
 user_id DECIMAL(12) NOT NULL,
 is_public BOOLEAN NOT NULL,
