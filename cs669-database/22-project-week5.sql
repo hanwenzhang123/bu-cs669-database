@@ -164,6 +164,39 @@ END;
 $proc$ LANGUAGE plpgsql
 
 
+START TRANSACTION;
+
+DO
+ $$BEGIN
+ 	EXECUTE AddNewAd(1, 2, '06-06-2020', 'counseling services', 'sending my counseling service to the user daily including my personal link, contact information and occasional promotions',
+	 	1, 123456789012345, '123 main street, New York, NY 10001');
+	EXECUTE AddNewAd(2, 10, '09-06-2020', 'e-commerce', 'distributing my product links twice a day',
+		2, 234567890123456, '123 main street, Los Angeles, CA 90001');
+	EXECUTE AddNewAd(3, 7, '08-06-2020', 'counseling services', 'sending my personal link, contact information and occasional promotions',
+		3, 345678901234567, '123 main street, El Paso, TX 79936');
+	EXECUTE AddNewAd(4, 9, '10-06-2020', 'education', 'daily institional news and study tips to current users',
+		4, 456789012345678, '123 main street, Chicago, IL 60629');
+	EXECUTE AddNewAd(5, 4, '02-06-2021', 'counseling services', 'I will be the best therapy for you, please contact me',
+		5, 567890123456789, '123 main street, Brooklyn, NY 90011');
+	EXECUTE AddNewAd(6, 1, '03-06-2021', 'counseling services', 'Going through a difficult time, I have been there, let is talk',
+		6, 678901234567890, '123 main street, Portland, OR 97035');
+	EXECUTE AddNewAd(7, 8, '05-06-2021', 'counseling services', 'Trying to find your lost happiness? I get it for you',
+		7, 246801357901234, '123 main street, Savannah, GA 31302');
+	EXECUTE AddNewAd(8, 3, '06-06-2021', 'e-commerce', 'All you need for your wellness is this massage gun that make you stress free',
+		8, 135792468012345, '123 main street, Miami, FL 33101');
+	EXECUTE AddNewAd(9, 5, '04-06-2021', 'education', 'sharing the knowledge that anxiety and stress are big issues for those suffering',
+		9, 567890987654321, '123 main street, Pittsburgh, PA 15106');
+	EXECUTE AddNewAd(10, 2, '07-06-2020', 'e-commerce', 'I designed this pillow is dedicated for your comfort and sleep quality',
+		10, 123456789012345, '123 main street, New York, NY 10001');
+ END$$;
+
+COMMIT TRANSACTION;
+
+
+SELECT * FROM Advertisement;
+SELECT * FROM Payment;
+
+
 
 --QUERIES
 --Replace this with your queries.
