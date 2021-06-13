@@ -317,19 +317,34 @@ JOIN Public ON Users.user_id = Public.user_id
 JOIN Entry ON Users.user_id = Entry.user_id
 			AND Entry.entry_date > CURRENT_DATE - INTERVAL '6 months'
 
-
-SELECT COUNT(DISTINCT Users.username) AS high_functional_user_count
+				
+SELECT COUNT(DISTINCT Users.user_id) AS high_functional_user_count
 FROM Users
 JOIN Entry ON Users.user_id = Entry.user_id
 JOIN Rating ON Entry.entry_id = Rating.entry_id
 			AND Rating.rating_scale >= 4
+			AND Entry.entry_date > CURRENT_DATE - INTERVAL '3 months'
 WHERE Users.user_id IN 
 	(SELECT Users.user_id
 	FROM Users
 	JOIN Transaction ON Transaction.user_id = Users.user_id
 	JOIN Advertisement on Advertisement.ad_id = Transaction.ad_id
-				AND Advertisement.advertising_type = 'education');
+				AND Advertisement.advertising_type = 'education'
+				AND Advertisement.requested_on > CURRENT_DATE - INTERVAL '6 months');
+
 
 --INDEXES
 --Replace this with your index creations.
+CREATE INDEX AdRequest
+ON Advertisement(business_id);
 
+CREATE INDEX DateEntry
+ON Entry(entry_date);
+
+CREATE INDEX AdType
+ON Advertisement(advertising_type);
+
+CREATE INDEX AdReqOn
+ON Advertisement(requested_on);
+
+  
