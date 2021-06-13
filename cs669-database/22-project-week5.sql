@@ -197,13 +197,139 @@ SELECT * FROM Advertisement;
 SELECT * FROM Payment;
 
 
+INSERT INTO Transaction(ad_id, user_id)
+VALUES(1, 1);
+INSERT INTO Transaction(ad_id, user_id)
+VALUES(1, 2);
+INSERT INTO Transaction(ad_id, user_id)
+VALUES(1, 3);
+INSERT INTO Transaction(ad_id, user_id)
+VALUES(1, 4);
+INSERT INTO Transaction(ad_id, user_id)
+VALUES(1, 5);
+INSERT INTO Transaction(ad_id, user_id)
+VALUES(2, 6);
+INSERT INTO Transaction(ad_id, user_id)
+VALUES(2, 7);
+INSERT INTO Transaction(ad_id, user_id)
+VALUES(2, 8);
+INSERT INTO Transaction(ad_id, user_id)
+VALUES(2, 9);
+INSERT INTO Transaction(ad_id, user_id)
+VALUES(2, 10);
+INSERT INTO Transaction(ad_id, user_id)
+VALUES(3, 1);
+INSERT INTO Transaction(ad_id, user_id)
+VALUES(3, 2);
+INSERT INTO Transaction(ad_id, user_id)
+VALUES(3, 3);
+INSERT INTO Transaction(ad_id, user_id)
+VALUES(3, 4);
+INSERT INTO Transaction(ad_id, user_id)
+VALUES(3, 5);
+INSERT INTO Transaction(ad_id, user_id)
+VALUES(4, 1);
+INSERT INTO Transaction(ad_id, user_id)
+VALUES(4, 2);
+INSERT INTO Transaction(ad_id, user_id)
+VALUES(4, 3);
+INSERT INTO Transaction(ad_id, user_id)
+VALUES(4, 4);
+INSERT INTO Transaction(ad_id, user_id)
+VALUES(4, 5);
+INSERT INTO Transaction(ad_id, user_id)
+VALUES(6, 1);
+INSERT INTO Transaction(ad_id, user_id)
+VALUES(6, 2);
+INSERT INTO Transaction(ad_id, user_id)
+VALUES(6, 3);
+INSERT INTO Transaction(ad_id, user_id)
+VALUES(6, 4);
+INSERT INTO Transaction(ad_id, user_id)
+VALUES(6, 5);
+INSERT INTO Transaction(ad_id, user_id)
+VALUES(5, 6);
+INSERT INTO Transaction(ad_id, user_id)
+VALUES(5, 7);
+INSERT INTO Transaction(ad_id, user_id)
+VALUES(5, 8);
+INSERT INTO Transaction(ad_id, user_id)
+VALUES(5, 9);
+INSERT INTO Transaction(ad_id, user_id)
+VALUES(5, 10);
+INSERT INTO Transaction(ad_id, user_id)
+VALUES(7, 6);
+INSERT INTO Transaction(ad_id, user_id)
+VALUES(7, 7);
+INSERT INTO Transaction(ad_id, user_id)
+VALUES(7, 8);
+INSERT INTO Transaction(ad_id, user_id)
+VALUES(7, 9);
+INSERT INTO Transaction(ad_id, user_id)
+VALUES(7, 10);
+INSERT INTO Transaction(ad_id, user_id)
+VALUES(10, 6);
+INSERT INTO Transaction(ad_id, user_id)
+VALUES(10, 7);
+INSERT INTO Transaction(ad_id, user_id)
+VALUES(10, 8);
+INSERT INTO Transaction(ad_id, user_id)
+VALUES(10, 9);
+INSERT INTO Transaction(ad_id, user_id)
+VALUES(10, 10);
+INSERT INTO Transaction(ad_id, user_id)
+VALUES(8, 3);
+INSERT INTO Transaction(ad_id, user_id)
+VALUES(8, 4);
+INSERT INTO Transaction(ad_id, user_id)
+VALUES(8, 5);
+INSERT INTO Transaction(ad_id, user_id)
+VALUES(8, 6);
+INSERT INTO Transaction(ad_id, user_id)
+VALUES(8, 7);
+INSERT INTO Transaction(ad_id, user_id)
+VALUES(9, 9);
+INSERT INTO Transaction(ad_id, user_id)
+VALUES(9, 10);
+INSERT INTO Transaction(ad_id, user_id)
+VALUES(9, 5);
+INSERT INTO Transaction(ad_id, user_id)
+VALUES(9, 1);
+INSERT INTO Transaction(ad_id, user_id)
+VALUES(9, 2);
+
+SELECT * FROM Transaction;	--50 entries
 
 --QUERIES
 --Replace this with your queries.
+SELECT Business.accountname AS Business, Users.username AS User
+FROM Advertisement
+JOIN Business ON Business.business_id = Advertisement.business_id
+			AND Advertisement.advertising_type = 'e-commerce'
+JOIN Transaction ON Transaction.ad_id = Advertisement.ad_id
+JOIN Users ON Users.user_id = Transaction.user_id;
+
+
+SELECT DISTINCT Users.username AS User
+FROM Users
+JOIN Public ON Users.user_id = Public.user_id
+			AND Public.is_public = 'true'
+JOIN Entry ON Users.user_id = Entry.user_id
+			AND Entry.entry_date > CURRENT_DATE - INTERVAL '6 months'
+
+
+SELECT COUNT(DISTINCT Users.username) AS high_functional_user_count
+FROM Users
+JOIN Entry ON Users.user_id = Entry.user_id
+JOIN Rating ON Entry.entry_id = Rating.entry_id
+			AND Rating.rating_scale >= 4
+WHERE Users.user_id IN 
+	(SELECT Users.user_id
+	FROM Users
+	JOIN Transaction ON Transaction.user_id = Users.user_id
+	JOIN Advertisement on Advertisement.ad_id = Transaction.ad_id
+				AND Advertisement.advertising_type = 'education');
 
 --INDEXES
 --Replace this with your index creations.
-
-
-
 
