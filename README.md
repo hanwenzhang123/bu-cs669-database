@@ -1,7 +1,8 @@
 # Master of Science in Software Development (MSSD) at Boston University
 
-<img style="width="500;" src="BU-logo.png" alt='Boston University Logo'>
 ![Boston University Logo]( BU-logo.png "Boston University Logo" )
+
+<img style="width: 500;" src="BU-logo.png">
 
 <p align="center">
  <img src="BU-logo.png" " >
