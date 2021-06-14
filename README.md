@@ -1,9 +1,10 @@
 # Master of Science in Software Development (MSSD) at Boston University
 
-![Boston University Logo](BU-logo.png "Boston University Logo" )
+<img style="width="500;" src="BU-logo.png" alt='Boston University Logo'>
+![Boston University Logo]( BU-logo.png "Boston University Logo" )
 
 <p align="center">
- <img src="BU-logo.png" width="300" >
+ <img src="BU-logo.png" " >
 </p>
 
 Want to know more about my background and/or collaborate?\
