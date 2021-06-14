@@ -2,7 +2,7 @@
 
 ![Boston University Logo]( BU-logo.png "Boston University Logo" )
 
-<img style="width: 400;" src="BU-logo.png">
+<img style="width: 100;" src="BU-logo.png">
 
 <p align="center">
  <img src="BU-logo.png" " >
