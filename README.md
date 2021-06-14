@@ -1,7 +1,5 @@
 # Master of Science in Software Development (MSSD) at Boston University
 
-![Boston University Logo]( BU-logo.png#width=10 "Boston University Logo" )
-
 Want to know more about my background and/or collaborate?\
 Let's connect through LinkedIn!
 [Hanwen's LinkedIn](https://www.linkedin.com/in/hanwenzhang123)
@@ -16,3 +14,5 @@ database lifecycle, and transactions. Students are introduced to advanced topics
 tuning, distributed databases, replication, business intelligence, data warehouses, internet databases,
 database administration, security, backup and recovery. Students design and implement a database
 system as a term project. `
+
+![Boston University Logo]( BU-logo.png "Boston University Logo" )
