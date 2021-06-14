@@ -2,7 +2,8 @@
 
 ![Boston University Logo](BU-logo.png "Boston University Logo")
 
-Want to know more about my background and/or collaborate? Let's connect through LinkedIn!
+Want to know more about my background and/or collaborate? 
+Let's connect through LinkedIn!
 [Hanwen's LinkedIn](https://www.linkedin.com/in/hanwenzhang123)
 
 ## CS 669, Database Design and Implementation for Business
