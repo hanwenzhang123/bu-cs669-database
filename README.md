@@ -1,12 +1,6 @@
 # Master of Science in Software Development (MSSD) at Boston University
 
-![Boston University Logo]( BU-logo.png "Boston University Logo" )
-
-<img style="width: 20;" src="BU-logo.png">
-
-<p align="center">
- <img src="BU-logo.png" " >
-</p>
+![Boston University Logo]( BU-logo.png#width=10 "Boston University Logo" )
 
 Want to know more about my background and/or collaborate?\
 Let's connect through LinkedIn!
