@@ -1,4 +1,4 @@
-# Master of Science in Software Development (MSSD) at Boston University
+# Master of Science in Software Development (MSSD) at Boston University 
 
 Want to know more about my background and/or collaborate?\
 Let's connect through LinkedIn!
