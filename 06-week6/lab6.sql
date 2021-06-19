@@ -1,3 +1,9 @@
+DROP TABLE Menu_item_selection;
+DROP TABLE Party;
+DROP TABLE Meal_date;
+DROP TABLE Menu_item;
+DROP TABLE Restaurant;
+
 CREATE TABLE Party (
 party_id DECIMAL(12) NOT NULL PRIMARY KEY,
 number_in_party DECIMAL(3) NOT NULL,
@@ -32,15 +38,18 @@ location VARCHAR(64),
 address VARCHAR(128),
 PRIMARY KEY (restaurant_id));
 
-ALTER TABLE Party
+ALTER TABLE Menu_item_selection
 ADD restaurant_id DECIMAL(12),
 ADD CONSTRAINT restaurant_id_fk
 FOREIGN KEY (restaurant_id) 
 REFERENCES Restaurant(restaurant_id);
 
 
-ALTER TABLE Party
+ALTER TABLE Menu_item_selection
 ADD satisfaction DECIMAL(1) CHECK (satisfaction BETWEEN 1 AND 5);
+
+SELECT * From Menu_item_selection;
+
 
 ALTER TABLE Restaurant
 DROP CONSTRAINT FK_party_id;
@@ -48,7 +57,10 @@ DROP CONSTRAINT FK_party_id;
 ALTER TABLE Party
 DROP CONSTRAINT restaurant_id_fk;
 
-DROP TABLE Restaurant
+ALTER TABLE Party
+DROP COLUMN satisfaction;
+
+DROP TABLE Restaurant;
 
 SELECT * From Party;
 
@@ -57,10 +69,14 @@ SELECT * From Restaurant;
 
 CREATE SEQUENCE party_seq START WITH 1;
 CREATE SEQUENCE restaurant_seq START WITH 1;
+CREATE SEQUENCE date_seq START WITH 1;
+CREATE SEQUENCE menu_seq START WITH 1;
 
 CREATE OR REPLACE FUNCTION AddInformation(
 	  party_id IN DECIMAL, restaurant_id IN DECIMAL, number_in_party IN DECIMAL, party_name IN VARCHAR, 
-	satisfaction IN DECIMAL, restaurant_name IN VARCHAR, location IN VARCHAR, address IN VARCHAR)
+	satisfaction IN DECIMAL, restaurant_name IN VARCHAR, location IN VARCHAR, address IN VARCHAR,
+	meal_date IN DATE, year IN DECIMAL, month IN DECIMAL, day_of_month IN DECIMAL
+	item_category IN VARCHAR, item_name IN VARCHAR, item_price IN DECIMAL)
 RETURNS VOID
 AS
 $proc$
@@ -68,8 +84,17 @@ BEGIN
   INSERT INTO Restaurant(restaurant_id, restaurant_name, location, address)
   VALUES(nextval('restaurant_seq'), restaurant_name, location, address);
   
-  INSERT INTO Party(party_id, restaurant_id, number_in_party, party_name, satisfaction)
-  VALUES(nextval('party_seq'), currval('restaurant_seq'), number_in_party, party_name, satisfaction);		 
+  INSERT INTO Party(party_id, number_in_party, party_name)
+  VALUES(nextval('party_seq'), number_in_party, party_name);
+  
+  INSERT INTO Meal_date(meal_date_id, meal_date, year, month, day_of_month)
+  VALUES(nextval('date_seq'), meal_date, year, month, day_of_month);
+  
+  INSERT INTO Menu_item(menu_item_id, item_category, item_name, item_price)
+  VALUES(nextval('menu_seq'), item_category, item_name, item_price);
+  
+  INSERT INTO Menu_item_selection(party_id, meal_date_id, menu_item_id, restaurant_id, satisfaction)
+  VALUES(currval('party_seq'), currval('date_seq'), currval('menu_seq'), currval('restaurant_seq'), satisfaction);  
 END;
 $proc$ LANGUAGE plpgsql
 
@@ -95,18 +120,19 @@ EXECUTE AddInformation(nextval('party_seq'), nextval('restaurant_seq'), 2, 'Pete
 END$$;
 COMMIT TRANSACTION;
 
+
 SELECT * FROM Restaurant;
 SELECT * FROM Party;
 
 DELETE FROM Party;
 DELETE FROM Restaurant;
 
-ALTER SEQUENCE party_seq RESTART WITH 1;
-ALTER SEQUENCE restaurant_seq RESTART WITH 1;
+DROP SEQUENCE party_seq;
+DROP SEQUENCE restaurant_seq;
 
 
-SELECT   Restaurant.location, SUM(satisfaction) AS total_satisfaction
-FROM     Party
-JOIN     Restaurant ON Restaurant.restaurant_id = Party.restaurant_id
-GROUP BY ROLLUP(satisfaction), Restaurant.location
+SELECT   Restaurant.location, Restaurant.restaurant_name, SUM(satisfaction) AS total_satisfaction
+FROM     Menu_item_selection
+JOIN     Restaurant ON Restaurant.restaurant_id = Menu_item_selection.restaurant_id
+GROUP BY ROLLUP(Restaurant.restaurant_name), Restaurant.location
 ORDER BY total_satisfaction DESC;
