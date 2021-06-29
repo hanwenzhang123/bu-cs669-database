@@ -4,7 +4,7 @@ Want to know more about my background and/or collaborate?\
 Let's connect through LinkedIn!
 [Hanwen's LinkedIn](https://www.linkedin.com/in/hanwenzhang123)
 
-## CS 669, Database Design and Implementation for Business
+## CS 669: Database Design and Implementation for Business
 `Students learn the latest relational and object-relational tools and techniques for persistent data and
 object modeling and management. Students gain extensive hands-on experience using Oracle or
 Microsoft SQL Server as they learn the Structured Query Language (SQL) and design and implement
