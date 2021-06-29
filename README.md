@@ -4,15 +4,10 @@ Want to know more about my background and/or collaborate?\
 Let's connect through LinkedIn!
 [Hanwen's LinkedIn](https://www.linkedin.com/in/hanwenzhang123)
 
-## CS 669: Database Design and Implementation for Business
-`Students learn the latest relational and object-relational tools and techniques for persistent data and
-object modeling and management. Students gain extensive hands-on experience using Oracle or
-Microsoft SQL Server as they learn the Structured Query Language (SQL) and design and implement
-databases. Topics covered include: the relational and entity-relational models, data modeling,
-normalization, object modeling, SQL, advanced SQL, stored procedures, triggers, database design,
-database lifecycle, and transactions. Students are introduced to advanced topics including performance
-tuning, distributed databases, replication, business intelligence, data warehouses, internet databases,
-database administration, security, backup and recovery. Students design and implement a database
-system as a term project. `
+## CS 526: Data Structures and Algorithms
+`This course covers and relates fundamental components of programs. 
+Students use various data structures to solve computational problems, and implement data structures using a high-level programming language. 
+Algorithms are created, decomposed, and expressed as pseudocode. 
+The running time of various algorithms and their computational complexity are analyzed. `
 
 ![Boston University Logo]( BU-logo.png "Boston University Logo" )
